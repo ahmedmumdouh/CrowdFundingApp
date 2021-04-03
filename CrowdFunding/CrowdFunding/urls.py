@@ -21,7 +21,7 @@ from comments import views
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    # path('home/', include('home.urls')),
+    path('home/', include('home.urls')),
     # path('pusers/', include('pusers.urls')),
     # path('projects/', include('projects.urls')),
     path('comments/', include('comments.urls')),
