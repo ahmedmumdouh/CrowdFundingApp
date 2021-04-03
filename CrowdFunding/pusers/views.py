@@ -138,55 +138,7 @@ def send_email(user, current_site, email, email_body, email_subject):
     email.send()
 
 
-# def list_projects(request):
-#     if not request.user.is_authenticated:
-#         return redirect(reverse("users:login"))
-#     # get all categories
-#     # categories_list = Categories.objects.all()
-#     # get users's projects
-#     tags = Tags.objects.all()
-#     user_projects = Projects.objects.filter(user_id=request.user.id)
 
-#     donations_flag = {}
-#     donations = {}
-#     for project in user_projects:
-#         donation = project.project_donations_set.all().count()
-#         total_raised = 0
-#         don_flag = 1
-
-#         if donation:
-#             total_raised = project.project_donations_set.all(
-#             ).aggregate(Sum("donation"))["donation__sum"]
-
-#             if total_raised >= (project.total_target*0.25):
-#                 don_flag = 0
-#         donations_flag[project.id] = don_flag
-#         donations[project.id] = total_raised
-
-#     project_form = NewProject()
-#     context = {"user_projects": user_projects,
-#                "project_form": project_form,
-#                "donations": donations,
-#                "donations_flag": donations_flag,
-#                "tags": tags,
-#                }
-
-#     return render(request, "users/projects.html", context=context)
-
-
-# @register.filter
-# def get_item(dictionary, key):
-#     return dictionary.get(key)
-
-
-# def donations_list(request):
-#     if not request.user.is_authenticated:
-#         return redirect(reverse("users:login"))
-
-#     user_donations = Project_donations.objects.filter(user_id=request.user.id)
-
-#     context = {"user_donations": user_donations}
-#     return render(request, "users/donations.html", context=context)
 
 
 def user_profile_update(request):
