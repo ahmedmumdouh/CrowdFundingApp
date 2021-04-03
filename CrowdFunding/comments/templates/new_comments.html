@@ -31,8 +31,9 @@
             <td> Eman </td>
             <td> {{ comm.comment }} </td>
             <td> {{comm.Create_db}}</td>
-            <td> <a href="#">Delete</a></td>
-            <td><a href="{% url 'edit_comment' comm.id %}">Edit</a></td>
+
+            <td> <a href="{% url 'delete_comment' comm.id %}">Delete</a></td>
+            <td><a href=" {% url 'edit_comment' comm.id %}">Edit</a></td>
 
         </tr>
         {%endfor%}

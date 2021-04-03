@@ -1,4 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
+from django.http import HttpResponse
+import datetime
 from .models import Comments
 from .forms import NewCommentForm
 
@@ -41,9 +43,19 @@ def show(request):
 def edit(request,comment_id):
       all_comment=get_object_or_404(Comments,pk=comment_id)
       if request.method == 'POST':
-           form=NewCommentForm(request.POST)
+            form=NewCommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save
+                all_comment.comment=form.cleaned_data.get('comment')
+                all_comment.save()
+                return redirect('new_comment')
+
       else:
         form=NewCommentForm()
 
       return render(request,'edit_comment.html',{'commentm':all_comment,'form':form})
-   
+
+def delete(request, comment_id):
+   comment = Comments.objects.get(pk = comment_id)
+   comment .delete()
+   return HttpResponse('deleted')
