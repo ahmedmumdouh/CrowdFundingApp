@@ -36,9 +36,9 @@ def new_comment(request):
     
     return render(request,'new_comments.html',{'commentm':all_comment,'form':form})
 
-def show(request):
-     all_comment=Comments.objects.all()
-     return render(request,'show.html',{'comments':all_comment})
+# def show(request):
+#      all_comment=Comments.objects.all()
+#      return render(request,'show.html',{'comments':all_comment})
   
 def edit(request,comment_id):
       all_comment=get_object_or_404(Comments,pk=comment_id)

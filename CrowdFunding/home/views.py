@@ -26,7 +26,7 @@ def new_category(request):
                 name=form.cleaned_data.get('name')
                
             )
-            return redirect('new_category')
+            return redirect('show')
 
 
     else:
@@ -35,3 +35,7 @@ def new_category(request):
  
     
     return render(request,'category/new_category.html',{'category':all_category,'form':form})
+
+def show(request):
+     all_category=Category.objects.all()
+     return render(request,'category/show.html',{'category':all_category})
