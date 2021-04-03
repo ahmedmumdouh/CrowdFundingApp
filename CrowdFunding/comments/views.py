@@ -58,4 +58,5 @@ def edit(request,comment_id):
 def delete(request, comment_id):
    comment = Comments.objects.get(pk = comment_id)
    comment .delete()
-   return HttpResponse('deleted')
+   return redirect('new_comment')
+#    return HttpResponse('deleted')
