@@ -1,13 +1,86 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    {% comment %} <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap.css' %}">
     <title>Document</title>
 </head>
 <body>
+{% block body %}
     {% block header %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'index' %}">Crowd Funding</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    {%if user.is_authenticated%}
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+      
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" >Categories</a>
+        </li>
+      </ul>
+      
+       {% comment %} <form class="d-flex justify-content-end">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form> {% endcomment %}
+    </div>
+    <ul class="d-flex  navbar-nav justify-content-end">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ user.username }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">My account</a>
+                <a class="dropdown-item" href="#">Change password</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" ></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" ></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" ></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" ></a>
+        </li>
+         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" ></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" ></a>
+        </li>
+    </ul>
+    {%else%}
+    <ul class="d-flex  navbar-nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}" >login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+        </li>
+    </ul>
+    {%endif%}
+  </div>
+</nav>
     {% endblock %}
 
     {% block content1 %}
@@ -15,5 +88,8 @@
 
     {% block footer %}
     {% endblock %}
+{% endblock %}
+<script src="{% static 'home/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'home/js/bootstrap.bundle.js' %}"></script>
 </body>
 </html>

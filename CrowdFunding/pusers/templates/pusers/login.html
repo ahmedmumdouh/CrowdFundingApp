@@ -1,0 +1,28 @@
+{% extends "home/index.html" %}
+
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center logo my-4">
+      <a href="{% url 'index' %}">Django Boards</a>
+    </h1>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Log in</h3>
+            <form method="post" novalidate>
+              {% csrf_token %}
+              {% include 'includes/form.html' %}
+              <br><br>
+              <button type="submit"  class="form-control btn btn-primary btn-block">Log In</button>
+            </form>
+          </div>
+          <div class="card-footer text-muted text-center">
+            Create New account <a href="{%url 'signup'%}">Sign up </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
