@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<head>
+    <title>showcomments</title>
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+    {% block content %}
+    <a href="{% url 'new_comment' %}" class="btn btn-primary">Add New Comment</a>
+    <table class="table" style="border: 1px solid;">
+        <thead class="thead-dark">
+            <tr>
+                <th>comment</th>
+                <th>Create_dt</th>
+            </tr>
+        </thead>
+
+        <tr>
+            {% for comm in comments %}
+
+            <td> {{ comm.comment }} </td>
+            <td> {{comm.Create_db}}</td>
+            <td> <a href="#">Delete</a></td>
+            <td><a href="{% url 'edit_comment' comm.id %}">Edit</a></td>
+
+        </tr>
+        {%endfor%}
+
+    </table>
+
+    {% endblock %}
+</body>
+
+</html>
