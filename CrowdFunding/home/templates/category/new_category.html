@@ -1,22 +1,10 @@
-<!DOCTYPE html>
+{% block content %}
 
-<head>
-    <title>comments</title>
-</head>
+<form method="POST" novalidate>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-success">Add</button>
 
-<body>
+</form>
 
-    {% block content %}
-
-    <form method="POST" novalidate>
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" class="btn btn-success">Add</button>
-
-    </form>
-
-    {% endblock %}
-</body>
-
-
-</html>
+{% endblock %}

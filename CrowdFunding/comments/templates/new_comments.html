@@ -1,46 +1,35 @@
-<!DOCTYPE html>
+{% block content %}
 
-<head>
-    <title>comments</title>
-</head>
+<form method="POST" novalidate>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-success">Add</button>
 
-<body>
+</form>
 
-    {% block content %}
-
-    <form method="POST" novalidate>
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" class="btn btn-success">Add</button>
-
-    </form>
-
-    <table class="table" style="border: 1px solid;">
-        <thead class="thead-dark">
-            <tr>
-                <th>created_By</th>
-                <th>comment</th>
-                <th>Create_dt</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-
+<table class="table" style="border: 1px solid;">
+    <thead class="thead-dark">
         <tr>
-
-            {% for comm in commentm %}
-            <td> Eman </td>
-            <td> {{ comm.comment }} </td>
-            <td> {{comm.Create_db}}</td>
-
-            <td> <a href="{% url 'delete_comment' comm.id %}">Delete</a></td>
-            <td><a href=" {% url 'edit_comment' comm.id %}">Edit</a></td>
-
+            <th>created_By</th>
+            <th>comment</th>
+            <th>Create_dt</th>
+            <th>Action</th>
         </tr>
-        {%endfor%}
+    </thead>
 
-    </table>
+    <tr>
 
-    {% endblock %}
-</body>
+        {% for comm in commentm %}
+        <td> Eman </td>
+        <td> {{ comm.comment }} </td>
+        <td> {{comm.Create_db}}</td>
 
-</html>
+        <td> <a href="{% url 'delete_comment' comm.id %}">Delete</a></td>
+        <td><a href=" {% url 'edit_comment' comm.id %}">Edit</a></td>
+
+    </tr>
+    {%endfor%}
+
+</table>
+
+{% endblock %}
