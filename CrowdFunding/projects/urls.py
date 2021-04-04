@@ -1,11 +1,14 @@
 
 from django.urls import path , include
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
     path('',  views.index , name='index'),
-    path('create', views.Create, name='newProject')
+    path('create', views.Create, name='newProject'),
+    path('view/<int:project_id>',views.show, name='viewProject')
 ]
 
 
