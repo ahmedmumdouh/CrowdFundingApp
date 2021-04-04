@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new project</title>
+</head>
+<body>
+    <form action="{% url 'newProject' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="">
+                title
+            </label>
+            <input type="text" name="title">
+        </div>
+        <div>
+            <label for="">
+                details
+            </label>
+            <input type="text" name="details">
+        </div>
+        <div>
+            <label for="">
+                category
+            </label>
+            <input type="text" name="category">
+        </div>
+        <div>
+            <label for="">
+                total_target
+            </label>
+            <input type="number" name="total_target">
+        </div>
+        <div>
+            <label for="">
+                start_date
+            </label>
+            <input type="date" name="s_date">
+        </div>
+        <div>
+            <label for="">
+                end_date
+            </label>
+            <input type="date" name="e_date">
+        </div>
+        <div>
+            <label for="">images</label>
+            <input type="file" name="images" accept="image/*" multiple>
+        </div>
+        <div>
+            <label for="">Tags</label>
+            <input type="text" name="tags">
+        </div>
+       
+        <input type="submit" value="submit">
+    </form>
+    
+</body>
+</html>

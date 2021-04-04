@@ -1,0 +1,29 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th>title</th>
+            <th>details</th>
+            <th>category</th>
+            <th>total target</th>
+            <th>images</th>
+        </tr>
+    </thead>
+    <tbody>
+         <tr>
+            <td>{{project.title}}</td>
+            <td>{{project.details}}</td>
+            <td>{{project.category}}</td>
+            <td>{{project.total_target}}</td>
+            <td>
+                {% for image in  images %}
+                <img src="/media/{{image.image}}" width="50px" alt="">
+                {% endfor %}
+            </td>
+            <td>
+                {% for tag in tags %}
+                <span>{{tag.tag}} | </span>
+                {% endfor %}
+            </td>
+         </tr>
+    </tbody>
+</table>

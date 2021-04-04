@@ -1,0 +1,28 @@
+project index
+<a href="{% url 'newProject' %}">add new</a>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>title</th>
+            <th>details</th>
+            <th>category</th>
+            <th>total target</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+         <tr>
+            <td>{{project.title}}</td>
+            <td>{{project.details}}</td>
+            <td>{{project.category}}</td>
+            <td>{{project.total_target}}</td>
+            <td>
+                <a href="#">Edit</a>
+                <a href="{% url 'viewProject' project.id %}">View</a>
+            </td>
+         </tr>
+        {% endfor %}
+    </tbody>
+</table>
