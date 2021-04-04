@@ -8,4 +8,4 @@ class Project(models.Model):
     total_target = models.DecimalField(max_digits=12,decimal_places=2,null=False)
     start_date = models.DateField(auto_now=False,auto_now_add=False,null=False)
     end_date = models.DateField(auto_now=False,auto_now_add=False,null=False)
-    
+    # owner_id

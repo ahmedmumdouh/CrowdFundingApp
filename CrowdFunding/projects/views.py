@@ -1,6 +1,5 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from projects.models import Project, Picture, Tag
-from django.http import HttpResponse
 import datetime
 
 
@@ -23,20 +22,20 @@ def Create(request):
         )
         uploadImages(request, Project.objects.last())
         uploadTags(request.POST.get('tags').split(),Project.objects.last())
-        return render(request,'projects/index.html')
+        return redirect('index')
 
 
-def uploadImages(dict, project):
-    for file in dict.FILES.getlist('images'):
-            file_name = str(file)
-            indexofdot = file_name.index('.')
-            ext = file_name[indexofdot:len(file_name)]
-            file_name = file_name[:indexofdot]
-            file.name = file_name + '_' + str(datetime.datetime.now()) + ext
-            image = Picture.objects.create(
-                project =  project,
-                image = file
-            )
+def uploadImages(images, project):
+    for file in images.FILES.getlist('images'):
+        file_name = str(file)
+        indexofdot = file_name.index('.')
+        ext = file_name[indexofdot:len(file_name)]
+        file_name = file_name[:indexofdot]
+        file.name = file_name + '_' + str(datetime.datetime.now()) + ext
+        image = Picture.objects.create(
+            project =  project,
+            image = file
+        )
 
 
 def uploadTags(tags,project):
@@ -60,4 +59,66 @@ def show(request, project_id):
         'images': images,
         'tags':tags
     })
-    # return HttpResponse(project_id)
+
+
+def update(request,project_id):
+    if request.method == "GET":
+        project = get_object_or_404(Project, id=project_id)
+        tags = Tag.objects.filter(project_id=project_id)
+        tagValues = ''
+        for tag in tags:
+            tagValues += tag.tag + ' '
+        return render(request,'edit.html', {'project_dict':  project, 'tags': tagValues})
+    else:
+        project = project = get_object_or_404(Project, id=project_id)
+        project.title = request.POST.get('title')
+        project.details = request.POST.get('details')
+        project.category = request.POST.get('category')
+        project.total_target = request.POST.get('total_target')
+        project.start_date = request.POST.get('s_date')
+        project.end_date = request.POST.get('e_date')
+        project.save()
+        tags = Tag.objects.filter(project_id=project_id)
+        tagValues = ''
+        for tag in tags:
+            tagValues += tag.tag + ' '
+        
+        # if tags not changed
+        if tagValues ==  request.POST.get('tags'):
+            # if upload new images
+            if request.FILES:
+                # update images only here
+                deleteOldImages(project)
+                uploadImages(request,project)
+        else:
+            # if images and tags changed 
+            if request.FILES:
+                #update image and tags here
+                deleteOldImages(project)
+                uploadImages(request,project)
+                deleteOldTags(tags)
+                uploadTags(request.POST.get('tags').split(),project)
+            else:
+                # if tags only changed 
+                deleteOldTags(tags)
+                uploadTags(request.POST.get('tags').split(),project)
+        return redirect('index')
+
+
+def deleteOldImages(project):
+    images = Picture.objects.filter(project_id=project.id)
+    for image in images:
+        image.image.delete()
+        image.delete()
+
+
+def deleteOldTags(tags):
+    for tag in tags:
+        tag.delete()
+
+
+def deleteProject(request, project_id):
+    project = get_object_or_404(Project, id= project_id)
+    deleteOldImages(project)
+    project.delete()
+    return redirect('index')
