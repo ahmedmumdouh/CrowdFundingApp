@@ -3,5 +3,5 @@ from .project import Project
 
 
 class Picture(models.Model):
-    project = models.ForeignKey(Project, on_delete = models.CASCADE, null=False)
+    project = models.ForeignKey(Project, on_delete = models.CASCADE)
     image = models.ImageField(null=False, upload_to='project_images/')

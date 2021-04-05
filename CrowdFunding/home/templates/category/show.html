@@ -1,0 +1,23 @@
+{% block content %}
+<a href="{% url 'new_category' %}" class="btn btn-primary">Add New category</a>
+<table class="table" style="border: 1px solid;">
+    <thead class="thead-dark">
+        <tr>
+            <th>category</th>
+            <th>Create_dt</th>
+        </tr>
+    </thead>
+
+    <tr>
+        {% for cat in category %}
+
+        <td> {{ cat.name }} </td>
+        <td> {{cat.Create_db}}</td>
+
+
+    </tr>
+    {%endfor%}
+
+</table>
+
+{% endblock %}

@@ -16,11 +16,12 @@ project index
          <tr>
             <td>{{project.title}}</td>
             <td>{{project.details}}</td>
-            <td>{{project.category}}</td>
+            <td>{{project.category.name}}</td>
             <td>{{project.total_target}}</td>
             <td>
-                <a href="#">Edit</a>
+                <a href="{% url 'editProject' project.id %}">Edit</a>
                 <a href="{% url 'viewProject' project.id %}">View</a>
+                <a href="{% url 'deleteProject' project.id %}">Delete</a>
             </td>
          </tr>
         {% endfor %}
