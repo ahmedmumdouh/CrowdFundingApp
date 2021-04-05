@@ -3,16 +3,20 @@ from django.http import HttpResponse
 import datetime
 from .models import Comments
 from .forms import NewCommentForm
+from  pusers.models import PUsers
 
 # Create your views here.
 
 
 # @login_required
-def new_comment(request):
+def new_comment(request,projectId):
  
 #    user=User.objects.frist()
 
+
     all_comment=Comments.objects.all()
+    current_user = request.user
+    # username=PUsers.objects.filter(id=current_user.id)
     if request.method == 'POST':
 
         form=NewCommentForm(request.POST)
@@ -21,26 +25,19 @@ def new_comment(request):
             # comment.save()
             comment=Comments.objects.create(
 
-                comment=form.cleaned_data.get('comment')
+                comment=form.cleaned_data.get('comment'),
                 # user_id=user
-                #  user_id=1,
-                # project_id=1
+                 user_id_id=current_user.id,
+                 project_id_id=projectId
             )
-            return redirect('new_comment')
-
-
+            
+            return redirect('viewProject',project_id=projectId)
     else:
-        form=NewCommentForm()
-
- 
-    
+        form=NewCommentForm
     return render(request,'new_comments.html',{'commentm':all_comment,'form':form})
 
-# def show(request):
-#      all_comment=Comments.objects.all()
-#      return render(request,'show.html',{'comments':all_comment})
-  
-def edit(request,comment_id):
+
+def edit(request,comment_id,projectId):
       all_comment=get_object_or_404(Comments,pk=comment_id)
       if request.method == 'POST':
             form=NewCommentForm(request.POST)
@@ -48,15 +45,15 @@ def edit(request,comment_id):
                 comment = form.save
                 all_comment.comment=form.cleaned_data.get('comment')
                 all_comment.save()
-                return redirect('new_comment')
+                return redirect('viewProject',project_id=projectId)
 
       else:
         form=NewCommentForm()
 
       return render(request,'edit_comment.html',{'commentm':all_comment,'form':form})
 
-def delete(request, comment_id):
+def delete(request, comment_id,projectId):
    comment = Comments.objects.get(pk = comment_id)
    comment .delete()
-   return redirect('new_comment')
+   return redirect('viewProject',project_id=projectId)
 #    return HttpResponse('deleted')

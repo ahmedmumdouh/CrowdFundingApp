@@ -7,29 +7,6 @@
 
 </form>
 
-<table class="table" style="border: 1px solid;">
-    <thead class="thead-dark">
-        <tr>
-            <th>created_By</th>
-            <th>comment</th>
-            <th>Create_dt</th>
-            <th>Action</th>
-        </tr>
-    </thead>
 
-    <tr>
-
-        {% for comm in commentm %}
-        <td> Eman </td>
-        <td> {{ comm.comment }} </td>
-        <td> {{comm.Create_db}}</td>
-
-        <td> <a href="{% url 'delete_comment' comm.id %}">Delete</a></td>
-        <td><a href=" {% url 'edit_comment' comm.id %}">Edit</a></td>
-
-    </tr>
-    {%endfor%}
-
-</table>
 
 {% endblock %}

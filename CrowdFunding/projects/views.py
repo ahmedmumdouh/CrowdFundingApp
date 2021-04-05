@@ -1,5 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from projects.models import Project, Picture, Tag
+from  comments.models import Comments
+from  pusers.models import PUsers
+
 import datetime
 
 
@@ -50,6 +53,9 @@ def show(request, project_id):
     project = get_object_or_404(Project, id=project_id)
     images = Picture.objects.filter(project_id=project_id)
     tags = Tag.objects.filter(project_id=project_id)
+    comments=Comments.objects.filter(project_id=project_id)
+    current_user = request.user
+    userObject=PUsers.objects.get(id=current_user.id)
     # delete image from project_images folder 
     # images[0].image.delete()
     print(tags)
@@ -57,7 +63,9 @@ def show(request, project_id):
     {
         'project':project,
         'images': images,
-        'tags':tags
+        'tags':tags,
+        'comments':comments,
+        'userObject':userObject
     })
 
 
@@ -122,3 +130,5 @@ def deleteProject(request, project_id):
     deleteOldImages(project)
     project.delete()
     return redirect('index')
+
+

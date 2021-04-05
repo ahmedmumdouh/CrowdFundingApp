@@ -6,11 +6,12 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('',  views.index , name='index'),
+    # path('',  views.index , name='index'),
     path('create', views.Create, name='newProject'),
     path('view/<int:project_id>',views.show, name='viewProject'),
     path('edit/<int:project_id>',views.update, name='editProject'),
     path('delete/<int:project_id>',views.deleteProject, name='deleteProject')
+    
 ]
 
 
