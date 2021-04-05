@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
+from comments import views
+
 
 
 urlpatterns = [
@@ -25,7 +27,11 @@ urlpatterns = [
     path('pusers/', include('pusers.urls')),
     path('projects/', include('projects.urls')),
     path('comments/', include('comments.urls')),
+    
     path('reports/', include('reports.urls')),
+    
+    
+    
 ]
 
 if settings.DEBUG:
