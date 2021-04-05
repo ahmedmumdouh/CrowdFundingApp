@@ -9,10 +9,10 @@ def index(request):
 
 def Create(request):
     if request.method == "GET":
-        return render(request, 'projects/add.html')
+        project = Project(None)
+        return render(request, 'projects/add.html',{'new_project':project})
     else:
-        print(request.POST.get('tags').split())
-        project = Project.objects.create(
+        project = Project(
             title= request.POST.get('title'),
             details= request.POST.get('details'),
             category= request.POST.get('category'),
@@ -20,9 +20,13 @@ def Create(request):
             start_date = request.POST.get('s_date'),
             end_date= request.POST.get('e_date')
         )
-        uploadImages(request, Project.objects.last())
-        uploadTags(request.POST.get('tags').split(),Project.objects.last())
-        return redirect('index')
+        if project.clean():
+            project.save()
+            uploadImages(request, Project.objects.last())
+            uploadTags(request.POST.get('tags').split(),Project.objects.last())
+            return redirect('index')
+        else:
+            return render(request, 'projects/add.html',{'new_project':project})
 
 
 def uploadImages(images, project):
@@ -68,7 +72,7 @@ def update(request,project_id):
         tagValues = ''
         for tag in tags:
             tagValues += tag.tag + ' '
-        return render(request,'edit.html', {'project_dict':  project, 'tags': tagValues})
+        return render(request,'projects/edit.html', {'project_dict':  project, 'tags': tagValues})
     else:
         project = project = get_object_or_404(Project, id=project_id)
         project.title = request.POST.get('title')
