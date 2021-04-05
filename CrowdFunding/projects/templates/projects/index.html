@@ -16,7 +16,7 @@ project index
          <tr>
             <td>{{project.title}}</td>
             <td>{{project.details}}</td>
-            <td>{{project.category}}</td>
+            <td>{{project.category.name}}</td>
             <td>{{project.total_target}}</td>
             <td>
                 <a href="{% url 'editProject' project.id %}">Edit</a>
