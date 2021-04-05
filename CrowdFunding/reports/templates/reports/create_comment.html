@@ -1,0 +1,9 @@
+{% block content %}
+
+<form action="{% url 'create_report_comment' projectId commentId %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Report </button>
+</form>
+
+{% endblock content %}

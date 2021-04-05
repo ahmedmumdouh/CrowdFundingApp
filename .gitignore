@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 /.venv
+/venv
 /CrowdFunding/media
 =======
 # Created by https://www.gitignore.io/api/django
