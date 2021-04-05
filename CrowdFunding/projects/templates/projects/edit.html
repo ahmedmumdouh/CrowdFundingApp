@@ -16,7 +16,15 @@
         <label for="">
             category
         </label>
-        <input type="text" name="category" value="{{ project_dict.category }}">
+        <select name="category" >
+            {% for cat in category %}
+                <option value="{{cat.id}}" {% if cat.id == project_dict.category.id %}
+                        selected
+                    {% endif %} >
+                        {{cat.name}}
+                </option>
+            {% endfor %}
+        </select>
     </div>
     <div>
         <label for="">

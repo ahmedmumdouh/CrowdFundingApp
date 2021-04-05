@@ -13,45 +13,57 @@
             <label for="">
                 title
             </label>
-            <input type="text" name="title">
+            <input type="text" name="title" value="{{new_project.title}}">
+            <p style="color: red;">{{new_project.errors.title}}</p>
         </div>
         <div>
             <label for="">
                 details
             </label>
-            <input type="text" name="details">
+            <input type="text" name="details" value="{{new_project.details}}">
+            <p style="color: red;">{{new_project.errors.details}}</p>
         </div>
         <div>
             <label for="">
                 category
             </label>
-            <input type="text" name="category">
+            <select name="category" >
+                {% for cat in category %}
+                    <option value="{{cat.id}}" {% if cat.id == new_project.category.id %}
+                            selected
+                        {% endif %} >
+                            {{cat.name}}
+                    </option>
+                {% endfor %}
+            </select>
         </div>
         <div>
             <label for="">
                 total_target
             </label>
-            <input type="number" name="total_target">
+            <input type="number" name="total_target" value="{{new_project.total_target}}">
+            <p style="color: red;">{{new_project.errors.total_target}}</p>
         </div>
         <div>
             <label for="">
                 start_date
             </label>
-            <input type="date" name="s_date">
+            <input type="date" name="s_date" value="{{new_project.start_date}}">
         </div>
         <div>
             <label for="">
                 end_date
             </label>
-            <input type="date" name="e_date">
+            <input  type="date" name="e_date" value="{{new_project.end_date}}">
+            <p style="color: red;">{{new_project.errors.date}}</p>
         </div>
         <div>
             <label for="">images</label>
-            <input type="file" name="images" accept="image/*" multiple>
+            <input required type="file" name="images" accept="image/*" multiple>
         </div>
         <div>
             <label for="">Tags</label>
-            <input type="text" name="tags">
+            <input required type="text" name="tags">
         </div>
        
         <input type="submit" value="submit">

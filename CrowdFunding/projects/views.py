@@ -2,30 +2,38 @@ from django.shortcuts import render, get_object_or_404, redirect
 from projects.models import Project, Picture, Tag
 from  comments.models import Comments
 from  pusers.models import PUsers
-
+from home.models import Category
 import datetime
 
 
 def index(request):
-    projects = Project.objects.all()
+    projects = Project.objects.select_related('category')
     return render(request,'projects/index.html',{'projects':projects})
 
 def Create(request):
+    
     if request.method == "GET":
-        return render(request, 'projects/add.html')
+        project = Project(None)
+        category = Category.objects.all()
+        return render(request, 'projects/add.html',{'new_project':project,'category':category})
     else:
-        print(request.POST.get('tags').split())
-        project = Project.objects.create(
+        project = Project(
             title= request.POST.get('title'),
             details= request.POST.get('details'),
-            category= request.POST.get('category'),
+            category_id = request.POST.get('category'),
             total_target= request.POST.get('total_target'),
             start_date = request.POST.get('s_date'),
-            end_date= request.POST.get('e_date')
+            end_date= request.POST.get('e_date'),
+            owner_id = request.user.id
         )
-        uploadImages(request, Project.objects.last())
-        uploadTags(request.POST.get('tags').split(),Project.objects.last())
-        return redirect('projects')
+        if project.clean():
+            project.save()
+            uploadImages(request, Project.objects.last())
+            uploadTags(request.POST.get('tags').split(),Project.objects.last())
+            return redirect('projects')
+        else:
+            category = Category.objects.all()
+            return render(request, 'projects/add.html',{'new_project':project,'category':category})
 
 
 def uploadImages(images, project):
@@ -54,6 +62,7 @@ def show(request, project_id):
     images = Picture.objects.filter(project_id=project_id)
     tags = Tag.objects.filter(project_id=project_id)
     comments=Comments.objects.filter(project_id=project_id)
+    category = Category.objects.get(id=project.category_id)
     current_user = request.user
     userObject=PUsers.objects.get(id=current_user.id)
     # delete image from project_images folder 
@@ -65,7 +74,8 @@ def show(request, project_id):
         'images': images,
         'tags':tags,
         'comments':comments,
-        'userObject':userObject
+        'userObject':userObject,
+        'category': category
     })
 
 
@@ -76,12 +86,13 @@ def update(request,project_id):
         tagValues = ''
         for tag in tags:
             tagValues += tag.tag + ' '
-        return render(request,'edit.html', {'project_dict':  project, 'tags': tagValues})
+        category = Category.objects.all()
+        return render(request,'projects/edit.html', {'project_dict':  project,'category':category, 'tags': tagValues})
     else:
         project = project = get_object_or_404(Project, id=project_id)
         project.title = request.POST.get('title')
         project.details = request.POST.get('details')
-        project.category = request.POST.get('category')
+        project.category_id = request.POST.get('category')
         project.total_target = request.POST.get('total_target')
         project.start_date = request.POST.get('s_date')
         project.end_date = request.POST.get('e_date')
