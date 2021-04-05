@@ -25,7 +25,7 @@ def Create(request):
         )
         uploadImages(request, Project.objects.last())
         uploadTags(request.POST.get('tags').split(),Project.objects.last())
-        return redirect('index')
+        return redirect('projects')
 
 
 def uploadImages(images, project):
@@ -110,7 +110,7 @@ def update(request,project_id):
                 # if tags only changed 
                 deleteOldTags(tags)
                 uploadTags(request.POST.get('tags').split(),project)
-        return redirect('index')
+        return redirect('projects')
 
 
 def deleteOldImages(project):
@@ -129,6 +129,6 @@ def deleteProject(request, project_id):
     project = get_object_or_404(Project, id= project_id)
     deleteOldImages(project)
     project.delete()
-    return redirect('index')
+    return redirect('projects')
 
 
