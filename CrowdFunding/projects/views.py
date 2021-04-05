@@ -86,12 +86,13 @@ def update(request,project_id):
         tagValues = ''
         for tag in tags:
             tagValues += tag.tag + ' '
-        return render(request,'projects/edit.html', {'project_dict':  project, 'tags': tagValues})
+        category = Category.objects.all()
+        return render(request,'projects/edit.html', {'project_dict':  project,'category':category, 'tags': tagValues})
     else:
         project = project = get_object_or_404(Project, id=project_id)
         project.title = request.POST.get('title')
         project.details = request.POST.get('details')
-        project.category = request.POST.get('category')
+        project.category_id = request.POST.get('category')
         project.total_target = request.POST.get('total_target')
         project.start_date = request.POST.get('s_date')
         project.end_date = request.POST.get('e_date')
