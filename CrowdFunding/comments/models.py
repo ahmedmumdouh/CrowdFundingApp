@@ -1,11 +1,11 @@
 from django.db import models
-
+from  pusers.models import PUsers
+from projects.models import Project
 # Create your models here.
 #comments  -> users(FK) + projects(fk)
 # class Comments (models.Model):   
 #     pass
-from  pusers.models import PUsers
-from projects.models import Project
+
 
 class Comments(models.Model):
     comment= models.CharField(max_length=200)

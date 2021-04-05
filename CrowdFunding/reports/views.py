@@ -6,27 +6,41 @@ from .models import ReportProject, ReportComment
 
 
 
-def create_report_project(request):
+def create_report_project(request,projectId,):
     if request.method == 'POST':
         form = ReportProjectForm(request.POST)
+        current_user = request.user
         if form.is_valid():
-            form.save()
-            return redirect('show_report_project')
+            # form.save()
+            report=ReportProject.objects.create(
+                title=form.cleaned_data.get('title'),
+                body_project=form.cleaned_data.get('body_project'),
+                project_id=projectId,
+                user_id=current_user.id
+            )
+            return redirect('viewProject',project_id=projectId)
     else:
         form = ReportProjectForm()
-        return render(request, "reports/create_project.html", {'form': form})
+        return render(request, "reports/create_project.html", {'form': form,'projectId':projectId})
+        # return render(request, "reports/create_project.html", {'form': form,'projectId':projectId})
 
 
-def create_report_comment(request):
+
+def create_report_comment(request,projectId,commentId):
+    current_user = request.user
     if request.method == 'POST':
         form = ReportCommentForm(request.POST)
         if form.is_valid():
-
-            form.save()
-            return redirect('show_report_comment')
+            report=ReportComment.objects.create(
+                title=form.cleaned_data.get('title'),
+                body_comment=form.cleaned_data.get('body_comment'),
+                comment_id=commentId,
+                user_id=current_user.id
+            )
+            return redirect('viewProject',project_id=projectId)
     else:
         form = ReportCommentForm()
-        return render(request, "reports/create_comment.html", {'form': form})
+        return render(request, "reports/create_comment.html", {'form': form,'commentId':commentId,'projectId':projectId})
 
 
 def show_report_comment(request):
@@ -34,6 +48,7 @@ def show_report_comment(request):
     context = {
             "all_comments": all_comments
        }
+
     return render(request, 'reports/showRC.html', context)
 
 

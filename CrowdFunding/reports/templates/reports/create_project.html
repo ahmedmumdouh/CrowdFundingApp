@@ -1,9 +1,9 @@
-{%  block content %}
+{% block content %}
 
 
-<form action="{% url 'create_report_project' %}" method="post" >
-{% csrf_token %}
-{{ form.as_p }}
-<button type="submit">Report</button>
+<form action="{% url 'create_report_project' projectId  %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Report</button>
 </form>
-{%  endblock content %}
+{% endblock content %}

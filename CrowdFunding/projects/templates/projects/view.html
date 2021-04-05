@@ -29,6 +29,9 @@
 
                 {% endfor %}
             </td>
+            <td>
+                <a href="{% url 'create_report_project' project.id %}">Report</a>
+            </td>
         </tr>
     </tbody>
 
@@ -56,6 +59,7 @@
 
         <td> <a href="{% url 'delete_comment' project.id  comm.id%}">Delete</a></td>
         <td><a href=" {% url 'edit_comment' project.id comm.id %}">Edit</a></td>
+        <td><a href=" {% url 'create_report_comment' project.id comm.id %}">Report</a></td>
 
     </tr>
     {%endfor%}

@@ -1,4 +1,7 @@
 from django.db import models
+from  pusers.models import PUsers
+from projects.models import Project
+from comments.models import Comments
 
 
 # Create your models here.
@@ -9,6 +12,8 @@ class ReportComment(models.Model):
     body_comment = models.TextField(max_length=4000, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(PUsers, null=True,on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comments, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title, self.body_comment
@@ -19,15 +24,15 @@ class ReportProject(models.Model):
     body_project = models.TextField(max_length=4000, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    project = models.ForeignKey(Project, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(PUsers, null=True,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title, self.body_project
 
-    #  user = models.ForeignKey('Users', null=True,
-    #                   on_delete=models.CASCADE)
-    # project = models.ForeignKey(
-    #      'Project', null=True, on_delete=models.CASCADE)
-    #   comment = models.ForeignKey(
-    #      'Comment', null=True, on_delete=models.CASCADE)
+ 
+  
+
+         
     # user_id = models.IntegerField(blank=True, null=True)
     # project_id = models.IntegerField(blank=True, null=True)
