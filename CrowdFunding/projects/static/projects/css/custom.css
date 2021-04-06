@@ -12,3 +12,7 @@ div.carousel .carousel-inner .carousel-item img{
     width: 100vw;
     max-height: 20vw;
 }
+
+.checked {
+    color: orange;
+  }

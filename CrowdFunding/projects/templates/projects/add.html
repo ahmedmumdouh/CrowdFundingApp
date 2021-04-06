@@ -18,7 +18,7 @@
                     <label for="">
                         Details
                     </label>
-                    <input class="form-control" type="text" name="details" value="{{new_project.details}}">
+                    <textarea class="form-control" name="details" value="{{new_project.details}}" id="" cols="30" rows="3"></textarea>
                     <p style="color: red;">{{new_project.errors.details}}</p>
                 </div>
                 <div class="form-group">
@@ -57,7 +57,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Images | select multiple image</label>
-                    <input class="form-control" required type="file" name="images" accept="image/*" multiple>
+                    <input class="form-control-file" required type="file" name="images" accept="image/*" multiple>
                 </div>
                 <div class="form-group">
                     <label for="">Tags</label>
