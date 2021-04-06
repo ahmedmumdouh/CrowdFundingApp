@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from projects.models import Project, Picture, Tag
 from  comments.models import Comments
+from .models import Donate
 from  pusers.models import PUsers
 from home.models import Category
+from comments.forms import NewCommentForm
+from .forms import NewDonateForm
 import datetime
 
 
@@ -68,6 +71,29 @@ def show(request, project_id):
     # delete image from project_images folder 
     # images[0].image.delete()
     print(tags)
+
+    all_comment=Comments.objects.all()
+    current_user = request.user
+    # username=PUsers.objects.filter(id=current_user.id)
+    if request.method == 'POST':
+
+        form=NewCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save
+            # comment.save()
+            comment=Comments.objects.create(
+
+                comment=form.cleaned_data.get('comment'),
+                # user_id=user
+                 user_id_id=current_user.id,
+                 project_id_id=project_id
+            )
+            
+            return redirect('viewProject',project_id=project_id)
+    else:
+        form=NewCommentForm
+     
+
     return render(request,'projects/view.html',
     {
         'project':project,
@@ -75,7 +101,9 @@ def show(request, project_id):
         'tags':tags,
         'comments':comments,
         'userObject':userObject,
-        'category': category
+        'category': category,
+        'commentm':all_comment,
+        'form':form
     })
 
 
@@ -141,5 +169,34 @@ def deleteProject(request, project_id):
     deleteOldImages(project)
     project.delete()
     return redirect('projects')
+
+
+def new_donate(request,projectId):
+    projectObject=Project.objects.get(id=projectId)
+    #user=User.objects.frist()
+    all_donate=Donate.objects.all()
+    current_user = request.user
+    # username=PUsers.objects.filter(id=current_user.id)
+    if request.method == 'POST':
+
+        form=NewDonateForm(request.POST)
+        if form.is_valid():
+            # donate = form.save
+            donate=Donate.objects.create(
+
+                 value=form.cleaned_data.get('value'),
+                # user_id=user
+                 owner_id=current_user.id,
+                 project_id=projectId
+            )
+            
+            projectObject.total_target +=form.cleaned_data.get('value')
+            projectObject.save()
+            
+            return redirect('viewProject',project_id=projectId)
+    else:
+        form=NewDonateForm
+    return render(request,'new_donate.html',{'donates':all_donate,'form':form})
+
 
 

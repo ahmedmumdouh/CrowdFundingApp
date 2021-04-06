@@ -1,4 +1,4 @@
-<table border="1">
+<table border="1px">
     <thead>
         <tr>
             <th>title</th>
@@ -7,7 +7,8 @@
             <th>total target</th>
             <th>images</th>
             <th>Tags</th>
-        </tr>
+            <th>Action</th>
+
     </thead>
     <tbody>
         <tr>
@@ -31,6 +32,9 @@
             </td>
             <td>
                 <a href="{% url 'create_report_project' project.id %}">Report</a>
+            </td>
+            <td>
+                <a href="{% url 'new_donate' project.id %}">Donate</a>
             </td>
         </tr>
     </tbody>
@@ -65,3 +69,15 @@
     {%endfor%}
 
 </table>
+{% block content %}
+
+<form method="POST" novalidate>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-success">Add</button>
+
+</form>
+
+
+
+{% endblock %}

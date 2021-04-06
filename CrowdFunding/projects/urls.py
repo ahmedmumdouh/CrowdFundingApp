@@ -10,6 +10,7 @@ urlpatterns = [
     path('create', views.Create, name='newProject'),
     path('view/<int:project_id>',views.show, name='viewProject'),
     path('edit/<int:project_id>',views.update, name='editProject'),
+    path('new_donate.html/<int:projectId>',views.new_donate, name='new_donate'),
     path('delete/<int:project_id>',views.deleteProject, name='deleteProject')
     
 ]
