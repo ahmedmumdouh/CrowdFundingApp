@@ -88,7 +88,7 @@ def show(request, project_id):
 
                 comment=form.cleaned_data.get('comment'),
                 # user_id=user
-                 user_id=current_user.id,
+                 user_id_id=current_user.id ,
                  project_id_id=project_id
             )
             
@@ -197,7 +197,7 @@ def new_donate(request,projectId):
                  project_id=projectId
             )
             
-            projectObject.total_target +=form.cleaned_data.get('value')
+            projectObject.total_donate +=form.cleaned_data.get('value')
             projectObject.save()
             
             return redirect('viewProject',project_id=projectId )
