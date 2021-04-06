@@ -68,17 +68,11 @@ def show(request, project_id):
     tags_array = []
     for tag in tags:
         tags_array.append(tag.tag)
-    # related_projects = Tag.objects.filter(tag__in=tags_array).select_related('project')
-    # related_projects = Project.objects.all().select_related('tags').filter(Q(tag__in=tags_array))
     related_projects = Tag.objects.filter(tag__in=tags_array).exclude(project_id__in=[project.id]).select_related('project').values('project').distinct()[:4] 
-    # print(related_projects[0]['project'])
     related_projects_images = []
     for related_project in related_projects:
         related_images = Picture.objects.filter(project_id=related_project['project'])[:1]
         related_projects_images += related_images
-    print(related_projects_images)
-
-    print(tags_array)
     return render(request,'projects/view.html',
     {
         'project':project,
