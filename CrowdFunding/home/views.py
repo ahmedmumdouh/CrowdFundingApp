@@ -15,8 +15,6 @@ def index(request):
     for project in latest_projects:
         images.append(Picture.objects.filter(project_id=project.id).first())
 
-    # images = Picture.objects.filter(project_id=project_id)
-    # tags = Tag.objects.filter(project_id=project_id)
     context = {
         'all_category': all_category,
         'latest_projects': latest_projects,
