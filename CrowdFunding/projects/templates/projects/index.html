@@ -1,4 +1,6 @@
 project index
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <a href="{% url 'newProject' %}">add new</a>
 
 <table border="1">
@@ -9,11 +11,12 @@ project index
             <th>category</th>
             <th>total target</th>
             <th>actions</th>
+
         </tr>
     </thead>
     <tbody>
         {% for project in projects %}
-         <tr>
+        <tr>
             <td>{{project.title}}</td>
             <td>{{project.details}}</td>
             <td>{{project.category.name}}</td>
@@ -23,7 +26,8 @@ project index
                 <a href="{% url 'viewProject' project.id %}">View</a>
                 <a href="{% url 'deleteProject' project.id %}">Delete</a>
             </td>
-         </tr>
+
+        </tr>
         {% endfor %}
     </tbody>
 </table>
