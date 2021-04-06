@@ -1,57 +1,69 @@
-<form action="{% url 'editProject' project_dict.id %}" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div>
-        <label for="">
-            title
-        </label>
-        <input type="text" name="title" value="{{ project_dict.title }}">
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-2">
+    <h2>Edit Project ({{project_dict.title}})</h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <form action="{% url 'editProject' project_dict.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group" >
+                    <label for="">
+                        Title
+                    </label>
+                    <input class="form-control" type="text" name="title" value="{{ project_dict.title }}">
+                </div>
+                <div class="form-group">
+                    <label for="">
+                        Details
+                    </label>
+                    <textarea class="form-control" name="details" id="" cols="30" rows="3">{{project_dict.details}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="">
+                        Category
+                    </label>
+                    <select class="form-control" name="category" >
+                        {% for cat in category %}
+                            <option value="{{cat.id}}" {% if cat.id == project_dict.category.id %}
+                                    selected
+                                {% endif %} >
+                                    {{cat.name}}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">
+                        Total Target
+                    </label>
+                    <input class="form-control" type="number" name="total_target" value="{{ project_dict.total_target }}">
+                </div>
+                <div class="form-group">
+                    <label for="">
+                        Start Date
+                    </label>
+                    <input class="form-control" type="date" name="s_date" value="{{ project_dict.start_date|date:'Y-m-d' }}">
+                </div>
+                <div class="form-group">
+                    <label for="">
+                        End Date
+                    </label>
+                    <input class="form-control" type="date" name="e_date" value="{{ project_dict.end_date | date:'Y-m-d' }}">
+                </div>
+                <div class="form-group">
+                    <label for="">Images | select multiple image</label>
+                    <input class="form-control-file" type="file" name="images" accept="image/*" multiple>
+                </div>
+                <div class="form-group">
+                    <label for="">Tags</label>
+                    <input class="form-control" type="text" name="tags" value="{{tags}}">
+                </div>
+               
+                <input class="btn btn-success btn-block" type="submit" value="Edit">
+            </form>
+        </div>
     </div>
-    <div>
-        <label for="">
-            details
-        </label>
-        <input type="text" name="details" value="{{ project_dict.details }}">
-    </div>
-    <div>
-        <label for="">
-            category
-        </label>
-        <select name="category" >
-            {% for cat in category %}
-                <option value="{{cat.id}}" {% if cat.id == project_dict.category.id %}
-                        selected
-                    {% endif %} >
-                        {{cat.name}}
-                </option>
-            {% endfor %}
-        </select>
-    </div>
-    <div>
-        <label for="">
-            total_target
-        </label>
-        <input type="number" name="total_target" value="{{ project_dict.total_target }}">
-    </div>
-    <div>
-        <label for="">
-            start_date
-        </label>
-        <input type="date" name="s_date" value="{{ project_dict.start_date|date:'Y-m-d' }}">
-    </div>
-    <div>
-        <label for="">
-            end_date
-        </label>
-        <input type="date" name="e_date" value="{{ project_dict.end_date | date:'Y-m-d' }}">
-    </div>
-    <div>
-        <label for="">images</label>
-        <input type="file" name="images" accept="image/*" multiple>
-    </div>
-    <div>
-        <label for="">Tags</label>
-        <input type="text" name="tags" value="{{tags}}">
-    </div>
-   
-    <input type="submit" value="submit">
-</form>
+</div>
+
+{% endblock %}

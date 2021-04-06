@@ -1,67 +1,109 @@
-<table border="1">
-    <thead>
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-2">
+    <a href="{% url 'projects' %}" class="btn btn-primary mb-2">Back</a>
+    <div class="row">
+        
+        <div class="col-6 ">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    {% for image in images %}
+                  <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0  %} active {%endif%}"></li>
+                  {% endfor %}
+                </ol>
+                <div class="carousel-inner">
+                    {% for image in images %}
+                    <div class="carousel-item {% if forloop.counter0 == 0  %} active {%endif%}">
+                        <img src="/media/{{image.image}}" class="img-fluid"  alt="">
+                    </div>
+                  {% endfor %}
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <h3 >Title | {{project.title}}</h3>
+            <h3 >Details | {{project.details}}</h3>
+            <h3 >category | {{category.name}}</h3>
+            <h3 >Total Target | {{project.total_target}}</h3>
+            <h3 >Tags | {% for tag in tags %} {{tag.tag}} {% endfor %}</h3>
+            <h3>Rate | <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star"></span>
+              <span class="fa fa-star"></span>
+            </h3>
+
+            <h3>Total Rate | <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+             </h3>
+        </div>
+    </div>
+    
+   <div class="my-2">
+    <h2>Comments</h2>
+    <a class="btn btn-success mb-2 float-right" href="{% url 'new_comment' project.id %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+      </svg></a>
+
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>created_By</th>
+                <th>comment</th>
+                <th>Create_dt</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
         <tr>
-            <th>title</th>
-            <th>details</th>
-            <th>category</th>
-            <th>total target</th>
-            <th>images</th>
-            <th>Tags</th>
+
+            {% for comm in comments %}
+            <td> {{userObject.first_name}} </td>
+            <td> {{ comm.comment }} </td>
+            <td> {{comm.Create_db}}</td>
+
+
+            <td> <a href="{% url 'delete_comment' project.id  comm.id%}">Delete</a>
+            <a href=" {% url 'edit_comment' project.id comm.id %}">Edit</a>
+            <a href=" {% url 'create_report_comment' project.id comm.id %}">Report</a></td>
+
         </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>{{project.title}}</td>
-            <td>{{project.details}}</td>
-            <td>{{category.name}}</td>
-            <td>{{project.total_target}}</td>
+        {%endfor%}
 
-
-
-            <td>
-                {% for image in images %}
-                <img src="/media/{{image.image}}" width="50px" alt="">
-                {% endfor %}
-            </td>
-            <td>
-                {% for tag in tags %}
-                <span>{{tag.tag}} | </span>
-
-                {% endfor %}
-            </td>
-            <td>
-                <a href="{% url 'create_report_project' project.id %}">Report</a>
-            </td>
-        </tr>
-    </tbody>
-
-
-</table>
-<a href="{% url 'new_comment' project.id %}">add comment</a>
-
-<table class="table" style="border: 1px solid;">
-    <thead class="thead-dark">
-        <tr>
-            <th>created_By</th>
-            <th>comment</th>
-            <th>Create_dt</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-
-    <tr>
-
-        {% for comm in comments %}
-        <td> {{userObject.first_name}} </td>
-        <td> {{ comm.comment }} </td>
-        <td> {{comm.Create_db}}</td>
-
-
-        <td> <a href="{% url 'delete_comment' project.id  comm.id%}">Delete</a></td>
-        <td><a href=" {% url 'edit_comment' project.id comm.id %}">Edit</a></td>
-        <td><a href=" {% url 'create_report_comment' project.id comm.id %}">Report</a></td>
-
-    </tr>
-    {%endfor%}
-
-</table>
+    </table>
+   </div>
+   <div>
+    <h2>
+        Related Project
+    </h2>
+    <div class="row">
+        {% for images in related_projects_images %}
+        <div class="col-md-3 col-12">
+            <div class="card">
+                    <img class="card-img-top" src="/media/{{images.image}}" alt="Card image cap">
+                    <div class="card-body">
+                    <h5 class="card-title">{{images.project.title}}</h5>
+                    <p class="card-text">{{images.project.details}}</p>
+                    <a href="{% url 'viewProject' images.project_id %}" class="btn btn-link">View Project</a>
+                    </div>
+                    
+              </div>
+        </div>
+        {% endfor %}
+    </div>
+   </div>
+</div>
+{% endblock %}
