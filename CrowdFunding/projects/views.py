@@ -1,10 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from projects.models import Project, Picture, Tag
+from projects.models import Project, Picture, Tag,ProjectRate
 from  comments.models import Comments
+from .models import Donate
 from  pusers.models import PUsers
 from home.models import Category
+from comments.forms import NewCommentForm
+from .forms import NewDonateForm
 import datetime
 from django.db.models import Q 
+from django.http import JsonResponse
+
 
 def index(request):
     projects = Project.objects.select_related('category')
@@ -73,6 +78,22 @@ def show(request, project_id):
     for related_project in related_projects:
         related_images = Picture.objects.filter(project_id=related_project['project'])[:1]
         related_projects_images += related_images
+    all_comment=Comments.objects.all()
+    current_user = request.user
+    if request.method == 'POST':
+        form=NewCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save
+            comment=Comments.objects.create(
+                comment=form.cleaned_data.get('comment'),
+                 user_id_id=current_user.id ,
+                 project_id_id=project_id
+            )
+            
+            return redirect('viewProject',project_id=project_id)
+    else:
+        form=NewCommentForm           
+
     return render(request,'projects/view.html',
     {
         'project':project,
@@ -82,6 +103,9 @@ def show(request, project_id):
         'userObject':userObject,
         'category': category,
         'related_projects_images':related_projects_images
+        'commentm':all_comment,
+        'form':form,
+       
     })
 
 
@@ -148,4 +172,97 @@ def deleteProject(request, project_id):
     project.delete()
     return redirect('projects')
 
+
+def new_donate(request,projectId):
+    projectObject=Project.objects.get(id=projectId)
+    #user=User.objects.frist()
+    all_donate=Donate.objects.all()
+    current_user = request.user
+    # username=PUsers.objects.filter(id=current_user.id)
+    if request.method == 'POST':
+
+        form=NewDonateForm(request.POST)
+        if form.is_valid():
+            # donate = form.save
+            donate=Donate.objects.create(
+
+                 value=form.cleaned_data.get('value'),
+                # user_id=user
+                 owner_id=current_user.id,
+                 project_id=projectId
+            )
+            
+            projectObject.total_donate +=form.cleaned_data.get('value')
+            projectObject.save()
+            
+            return redirect('viewProject',project_id=projectId )
+    else:
+        form=NewDonateForm
+    return render(request,'new_donate.html',{'donates':all_donate,'form':form})
+
+# def new_rate(request):
+#     projectObject=Project.objects.get(id=projectId)
+#     # current_user = request.user
+#     obj=ProjectRate.objects.filter(value=0).order_by("?").first()
+#     context ={
+
+#         'object':obj
+
+#     }
+
+    # if request.method == 'POST':
+
+    #     # form=NewDonateForm(request.POST)
+    #     # if form.is_valid():
+    #     #     # donate = form.save
+    #     rate=ProjectRate.objects.create(
+
+    #             value= request.GET.POST('len'),
+    #             owner_id=current_user.id,
+    #             project_id=projectId
+    #             )
+            
+            
+            
+    #     return redirect('viewProject',project_id=projectId )
+   
+    # return render(request,'new_rate.html',context)
+
+def new_rate(request,projectId):
+    # projectObject=Project.objects.get(id=projectId)
+    current_user = request.user
+    # if(not(ProjectRate.objects.filter(project_id=projectId ,owner_id=current_user.id))):
+    rate=ProjectRate.objects.create(
+
+            value=0,        
+            owner_id=current_user.id,
+            project_id=projectId
+            )
+    obj=Project.objects.filter(id=projectId).order_by("?").first()
+    context ={
+
+        'object':obj
+
+    }
+    return render(request,'new_rate.html',context)
+
+
+
+def rate_project(request,projectId):
+    current_user = request.user
+    if request.method=='POST':
+        val=request.POST.get('val')
+        obj=ProjectRate.objects.get(project_id=projectId,owner_id=current_user.id)
+        obj.value=val
+        obj.save()
+        return JsonResponse({'success':'true' ,'value':val }, safe=False)
+    return   JsonResponse({'success':'false'})
+
+def all_rates():
+    allrates=ProjectRate.objects.all
+    context={
+    'allrates':allrates
+
+    }
+    return render('view',context)
 

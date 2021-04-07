@@ -1,1 +1,1 @@
-from .models import Picture,Project,Tag
+from .models import Picture,Project,Tag,ProjectRate ,Donate

@@ -12,6 +12,8 @@ class Project(models.Model):
     total_target = models.DecimalField(max_digits=12,decimal_places=2)
     start_date = models.DateField(auto_now=False,auto_now_add=False)
     end_date = models.DateField(auto_now=False,auto_now_add=False)
+    total_donate = models.DecimalField(max_digits=12,decimal_places=2,default=0
+    )
     
     errors = {}
     def clean(self):

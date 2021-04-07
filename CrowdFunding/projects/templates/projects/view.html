@@ -68,6 +68,34 @@
             </tr>
         </thead>
 
+            <td>
+                {% for image in images %}
+                <img src="/media/{{image.image}}" width="50px" alt="">
+                {% endfor %}
+            </td>
+            <td>
+                {% for tag in tags %}
+                <span>{{tag.tag}} | </span>
+
+                {% endfor %}
+            </td>
+            <td>
+                <a href="{% url 'create_report_project' project.id %}">Report</a>
+                <a href="{% url 'new_donate' project.id %}">Donate</a>
+                <a href="{% url 'new_rate' project.id %}">Rate</a>
+
+
+            </td>
+
+        </tr>
+    </tbody>
+
+
+</table>
+<a href="{% url 'new_comment' project.id %}">add comment</a>
+
+<table class="table" style="border: 1px solid;">
+    <thead class="thead-dark">
         <tr>
 
             {% for comm in comments %}
@@ -107,3 +135,26 @@
    </div>
 </div>
 {% endblock %}
+</table>
+{% block content %}
+
+<form method="POST" novalidate>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-success">Add</button>
+
+</form>
+
+
+
+
+<div>
+
+    <button type="submit" class="fa fa-star fa-3x my_btn  checked" value="1" id="st1"></button>
+    <button type="submit" class="fa fa-star fa-3x my_btn checked" value="2" id="st2"></button>
+    <button type="submit" class="fa fa-star fa-3x  my_btn checked" value="3" id="st3"></button>
+    <button type="submit" class="fa fa-star fa-3x my_btn checked" value="4" id="st4"></button>
+    <button type="submit" class="fa fa-star fa-3x my_btn " value="5" id="st5"></button>
+
+</div>
+{%endblock%}
