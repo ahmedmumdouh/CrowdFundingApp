@@ -1,0 +1,17 @@
+{%  block content %}
+{%  for one in all_projects  %}
+
+<h1>{{ one.title }} </h1>
+<h1>{{ one.body_project}} </h1>
+<a class="hyperlink-off" href="{% url 'delete_report_project' id=one.id   %}">
+       Remove
+ </a>
+
+{% endfor %}
+
+
+{%  endblock content %}
+
+
+
+

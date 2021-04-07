@@ -1,0 +1,72 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-2">
+    <h2>Add New Project</h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <form action="{% url 'newProject' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="">
+                        Title
+                    </label>
+                    <input class="form-control" type="text" name="title" value="{{new_project.title}}">
+                    <p style="color: red;">{{new_project.errors.title}}</p>
+                </div>
+                <div class="form-group">
+                    <label for="">
+                        Details
+                    </label>
+                    <textarea class="form-control" name="details" value="{{new_project.details}}" id="" cols="30" rows="3"></textarea>
+                    <p style="color: red;">{{new_project.errors.details}}</p>
+                </div>
+                <div class="form-group">
+                    <label for="">
+                        Category
+                    </label>
+                    <select class="form-control" name="category" >
+                        {% for cat in category %}
+                            <option value="{{cat.id}}" {% if cat.id == new_project.category.id %}
+                                    selected
+                                {% endif %} >
+                                    {{cat.name}}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">
+                        Total Target
+                    </label>
+                    <input class="form-control" type="number" name="total_target" value="{{new_project.total_target}}">
+                    <p style="color: red;">{{new_project.errors.total_target}}</p>
+                </div>
+                <div class="form-group">
+                    <label for="">
+                        Start Date
+                    </label>
+                    <input class="form-control" type="date" name="s_date" value="{{new_project.start_date}}">
+                </div>
+                <div class="form-group">
+                    <label for="">
+                        End Date
+                    </label>
+                    <input class="form-control" type="date" name="e_date" value="{{new_project.end_date}}">
+                    <p style="color: red;">{{new_project.errors.date}}</p>
+                </div>
+                <div class="form-group">
+                    <label for="">Images | select multiple image</label>
+                    <input class="form-control-file" required type="file" name="images" accept="image/*" multiple>
+                </div>
+                <div class="form-group">
+                    <label for="">Tags</label>
+                    <input class="form-control" required type="text" name="tags">
+                </div>
+               
+                <input class="btn btn-success btn-block" type="submit" value="Create">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

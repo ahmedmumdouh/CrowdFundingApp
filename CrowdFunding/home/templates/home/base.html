@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- project_page scripts start -->
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"> 
+    <link rel="stylesheet" type="text/css" href="{% static '/projects/css/custom.css' %}">
+ 
+    <!-- project_page scripts end -->
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    <title>{% block title %}title{% endblock %}</title>
+</head>
+
+<body>
+    {% if request.user.is_authenticated %}
+        {% include 'pusers/user_nav.html' with user=user%}
+
+         {% block is_authenticated %}
+         {% endblock %}
+
+    {% else %}
+        {% include "home/default_nav.html" %}
+        {% block not_authenticated %}
+        <h1> You aren't authenticated </h1>
+         {% endblock %}
+
+    {% endif %}
+
+{% block content %}
+{% endblock content %}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+
+</html>
