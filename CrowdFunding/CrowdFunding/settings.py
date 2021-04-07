@@ -160,12 +160,3 @@ MEDIA_URL = '/media/'
 
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
- <table class="table table-bordered">
-        <thead class="thead-dark">
-            <tr>
-                <th>created_By</th>
-                <th>comment</th>
-                <th>Create_dt</th>
-                <th>Action</th>
-            </tr>
-        </thead>

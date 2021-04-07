@@ -102,7 +102,7 @@ def show(request, project_id):
         'comments':comments,
         'userObject':userObject,
         'category': category,
-        'related_projects_images':related_projects_images
+        'related_projects_images':related_projects_images,
         'commentm':all_comment,
         'form':form,
        
