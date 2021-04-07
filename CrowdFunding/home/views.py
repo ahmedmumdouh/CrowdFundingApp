@@ -2,9 +2,14 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse
 import datetime
 from .models import Category
+
 from .forms import NewCategoryForm
 from projects.models import Project
 from projects.models import Picture
+from projects.models import Tag
+
+
+
 
 # Create your views here.
 
@@ -53,3 +58,27 @@ def my_projects(request):
     # current_user = request.user
     # userObject=PUsers.objects.get(id=current_user.id)
     return render(request,'my_projects/show.html',{'my_projects':my_projects})
+
+def searchName(request):
+
+    if request.method == 'POST':
+        result = request.POST.get('search_name')
+
+        results = Project.objects.filter(title=result)
+        context = {
+            "results": results,
+            "yoursearch": result
+        }
+        return render(request, 'home/searchResults.html', context)
+
+def searchTag(request):
+
+    if request.method == 'POST':
+        result = request.POST.get('search_tag')
+        resultss = Tag.objects.filter(tag=result)
+      #  results = Project.objects.filter(tag=resultss)
+        context = {
+            "results": resultss,
+            "yoursearch": result
+        }
+        return render(request, 'home/searchResultsTag.html', context)

@@ -80,7 +80,8 @@ hr {
 .sliderTitle {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 50px;
-    font-style: bold;
+    /*font-style: bold; */
+
 }
 
 .sliderDesc {
@@ -101,6 +102,35 @@ hr {
 
 
 {% block is_authenticated %}
+
+<div class="container row" >
+<div class="w-1 p-3 col-xs-6" >
+    <form method="post" action="{% url 'searchName'  %}" style="margin: 0">
+            {% csrf_token %}
+                            <div class="input-group">
+                                          <div class="form-outline">
+                                            <input id="search_name" type="search" id="form1"  name="search_name"  class="form-control" />
+                                          </div>
+                                <button  id="searchTag_submit" type="submit" class="btn btn-outline-primary">search by title</button>
+
+                            </div>
+        </form>
+</div>
+<div class="w-1 p-3 col-xs-6" >
+    <form method="post" action="{% url 'searchTag'  %}" style="margin: 0">
+            {% csrf_token %}
+                            <div class="input-group">
+                                          <div class="form-outline">
+                                            <input id="search_tag" type="search" name="search_tag"  class="form-control" />
+                                          </div>
+                                <button  id="searchName_submit" type="submit" class="btn btn-outline-primary">search by tag</button>
+
+                            </div>
+        </form>
+</div>
+</div>
+
+
 
 
 <div class="row col-md-12 p-4">
