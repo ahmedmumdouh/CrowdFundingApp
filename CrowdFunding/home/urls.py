@@ -10,6 +10,7 @@ urlpatterns = [
     path('my_projects',  views.my_projects , name='my_projects'),
     path('searchName', views.searchName, name='searchName'),
     path('searchTag', views.searchTag, name='searchTag'),
+    path('delete/<int:category_id>',  views.delete_category , name='delete_category'),
 
 ]
 

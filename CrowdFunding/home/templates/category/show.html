@@ -4,12 +4,13 @@
 
 
 {% block is_authenticated %}
-<a href="{% url 'new_category' %}" class="btn btn-primary">Add New category</a>
-<table class="table" style="border: 1px solid;">
-    <thead class="thead-dark">
+<a href="{% url 'new_category' %}" class="btn btn-primary mt-3">Add New category</a>
+<table class="table " style="border: 1px solid;">
+    <thead class="thead-dark ">
         <tr>
             <th>category</th>
             <th>Create_dt</th>
+            <th>action</th>
         </tr>
     </thead>
 
@@ -18,7 +19,7 @@
 
         <td> {{ cat.name }} </td>
         <td> {{cat.Create_db}}</td>
-
+        <td><a href="{% url 'delete_category' cat.id  %}" class="btn btn-danger">Delete</a></td>
 
     </tr>
     {%endfor%}
@@ -26,6 +27,3 @@
 </table>
 
 {% endblock %}
-
-
-
