@@ -30,11 +30,6 @@
 <div id="confirm-box">
 
 </div>
-
-
-
-
-
 {% endblock %}
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -48,51 +43,6 @@
 
 <script>
 
-    // alert("eman")
-    // document.getElementById("st1").addEventListener("click", rate)
-    // var stars = document.getElementsByTagName("span")
-    // var len = 0
-    // for (var star of stars)
-    //     star.addEventListener("click", rate)
-
-
-    // function rate(e) {
-
-
-    // document.getElementById("st1").style.color = "orange"
-    // len = parseInt(e.target.getAttribute('value'))
-
-    // flage = 0;
-
-    // for (var i = 0; i < len; i++) {
-    //     stars[i].style.color = "orange"
-
-    // }
-    // for (var i = len; i < 5; i++) {
-    //     stars[i].style.color = "lightgray"
-    // }
-    // console.log(len);
-    // $.ajax({
-    //     type: "POST",
-    //     url: 'new_rate.html/<int:projectId>',
-    //     data: {
-    //         "len": len,
-    //     },
-    //     dataType: "json",
-    //     success: function (data) {
-    //         // any process in data
-    //         alert("successfull")
-    //     },
-    //     failure: function () {
-    //         alert("failure");
-    //     }
-    // });
-
-
-
-    // }
-
-    //get all starts
 
     const one = document.getElementById("st1")
     const two = document.getElementById("st2")
@@ -103,9 +53,7 @@
     const form = document.querySelector('.rate-form')
     const confirmBox = document.getElementById('confirm-box')
     const csrf = document.getElementsByName('csrfmiddlewaretoken')
-    // console.log(form);
-    // console.log(confirmBox);
-    // console.log(csrf);
+
     const handleStarSelect = (size) => {
 
         const children = form.children

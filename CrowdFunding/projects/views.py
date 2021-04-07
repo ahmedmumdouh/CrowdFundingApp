@@ -84,6 +84,16 @@ def show(request, project_id):
         related_projects_images += related_images
     all_comment = Comments.objects.all()
     current_user = request.user
+    # /////////////////////////////////////////////////////////////////////////////
+
+   
+    
+
+           
+        
+
+
+    #//////////////////////////////////////////////////////////////////////////////
     if request.method == 'POST':
         form = NewCommentForm(request.POST)
         if form.is_valid():
@@ -122,6 +132,30 @@ def show(request, project_id):
     else:
         formm = NewDonateForm
     # return render(request,'view.html',{'donates':all_donate,'formm':formm})
+    #rate//////////////////////////////////////////////////////////////
+    if request.method == 'GET':
+        projectObject = Project.objects.get(id=project_id)
+    elif request.method == 'POST':
+        val = request.POST.get('val')
+        obj = ProjectRate.objects.filter(
+            project_id=project_id, owner_id=current_user.id).first()
+        if (obj):
+            obj.value = val
+            obj.save()
+            return JsonResponse({'success': 'true', 'value': val}, safe=False)
+        else:
+            rate = ProjectRate.objects.create(
+
+                value=val,
+                owner_id=current_user.id,
+                project_id=project_id
+            )
+            return JsonResponse({'success': 'true', 'value': val}, safe=False)
+    else:
+        return JsonResponse({'success': 'false'})
+
+    # return render(request, 'project_rate.html')   
+    #/////////////////////////////////////////////////////////////////
 
     return render(request, 'projects/view.html',
                   {
@@ -135,7 +169,8 @@ def show(request, project_id):
                       'commentm': all_comment,
                       'form': form,
                       'donates': all_donate,
-                      'formm': formm
+                      'formm': formm,
+                      'object': projectObject
 
                   })
 
@@ -209,8 +244,6 @@ def rate_project(request, projectId):
     if request.method == 'GET':
 
         projectObject = Project.objects.get(id=projectId)
-        # obj = Project.objects.get(
-        #     id=projectId)
         context = {
 
             'object': projectObject}
