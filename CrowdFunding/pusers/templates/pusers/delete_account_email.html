@@ -1,20 +1,78 @@
 {% extends "home/base.html" %}
 {% block title %}Delete Account{% endblock %}
-{% block content %}
-
-<div class="container" style="margin-top: 30px;">
-    {%if delete_code == 1%}
-    <h3>Thank you for your confirmation. your account now has been deleted.</h3>
-    {%elif delete_code == 0 %}
-    <h3>Delete link is valid for 24 hours only a new link has been sent to your email...</h3>
-    {%elif delete_code == -1 %}
-    <h3>A confirmation link has been sent to your email, please click on the link to delete your account...</h3>
-    {%else %}
-    <h3>Delete link is invalid!</h3>
-    {%endif%}
-</div>
+{% load bootstrap4 %}
 
 
+{% block not_authenticated %}
+
+<div class="container">
+    <h1 class="text-center logo my-4">
+    
+    </h1>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="card-header text-center">
+            <h3 class="card-title row justify-content-center">Mail-Server-Acknowledgement</h3>
+          </div>
+        <div class="card">
+          <div class="card-body text-center">
+            
+          
+                {%if delete_code == 1%}
+                <h3>Thank you for your confirmation. your account now has been deleted.</h3>
+                {%endif%}
+     
+
+           
+          </div>
+          <div class="card-footer text-muted text-center">
+            Back to <a href="{% url 'index' %}">Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock  %}
 
 
-{% endblock content %}
+
+
+
+  {% block is_authenticated %}
+
+
+  <div class="container">
+    <h1 class="text-center logo my-4">
+    
+    </h1>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="card-header text-center">
+            <h3 class="card-title row justify-content-center">Mail-Server-Acknowledgement</h3>
+          </div>
+        <div class="card">
+          <div class="card-body text-center">
+            
+            {% if delete_code == 0 %}
+            <h3>Delete link is valid for 24 hours only a new link has been sent to your email...</h3>
+            {%elif delete_code == -1 %}
+            <h3>A confirmation link has been sent to your email, please click on the link to delete your account...</h3>
+            {%else %}
+            <h3>Delete link is invalid!</h3>
+            {%endif%}
+
+           
+          </div>
+          <div class="card-footer text-muted text-center">
+            Back to <a href="{% url 'index' %}">Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+
+
+  
+{% endblock  %}
+

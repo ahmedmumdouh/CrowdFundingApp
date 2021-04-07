@@ -30,8 +30,28 @@
     {% else %}
         {% include "home/default_nav.html" %}
         {% block not_authenticated %}
-        <h1> You aren't authenticated </h1>
-         {% endblock %}
+        <div class="container">
+            <h1 class="text-center logo my-4">
+            
+            </h1>
+            <div class="row justify-content-center">
+              <div class="col-lg-8 col-md-10 col-sm-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title row justify-content-center">You Aren't Authenticated </h3>
+
+                      <a type="submit" href="{%url 'pusers:login'%}" class="btn btn-primary btn-block">Login</a>
+                  
+                  </div>
+                  <div class="card-footer text-muted text-center">
+                    Create New account <a href="{%url 'pusers:register'%}">Sign up </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {% endblock %}
 
     {% endif %}
 

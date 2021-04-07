@@ -1,7 +1,10 @@
 
 
 
-{%  block content %}
+{% extends 'home/base.html' %}
+{% load static %}
+{% block is_authenticated %}
+
 
 
 {%  for one in all_comments  %}
@@ -13,5 +16,5 @@
        Remove
  </a>
 {% endfor %}
-{%  endblock content %}
+{%  endblock  %}
 

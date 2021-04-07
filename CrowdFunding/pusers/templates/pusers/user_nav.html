@@ -34,12 +34,14 @@
 
         {%if request.user.is_authenticated%}
         <h5 class="nav-item dropdown" style="margin-right: 10px; color: white;">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Welcome, {{request.user.first_name}} 
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="{% url 'pusers:profile' %}">My-Projects</a>
+                <a class="dropdown-item" href="{% url 'pusers:profile' %}">My-Profile</a>
+                <a class="dropdown-item" href="#">My-Projects</a>
                 <a class="dropdown-item" href="#">My-Donates</a>
+                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'pusers:logout' %}">Logout</a>
             </div>
         </h5>
