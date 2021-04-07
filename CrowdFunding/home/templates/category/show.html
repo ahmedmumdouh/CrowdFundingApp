@@ -1,4 +1,9 @@
-{% block content %}
+{% extends "home/base.html" %}
+
+{% load bootstrap4 %}
+
+
+{% block is_authenticated %}
 <a href="{% url 'new_category' %}" class="btn btn-primary">Add New category</a>
 <table class="table" style="border: 1px solid;">
     <thead class="thead-dark">
@@ -21,3 +26,6 @@
 </table>
 
 {% endblock %}
+
+
+

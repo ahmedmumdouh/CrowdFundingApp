@@ -96,7 +96,7 @@ EMAIL_PORT = 587
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'project_django',
+        'NAME': 'django_project',
         'USER': 'mamdouh',
         'PASSWORD': '123',
         'HOST': '127.0.0.1',

@@ -1,4 +1,9 @@
-{% block content %}
+{% extends "home/base.html" %}
+
+{% load bootstrap4 %}
+
+
+{% block is_authenticated %}
 
 <form method="POST" novalidate>
     {% csrf_token %}

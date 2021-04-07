@@ -13,7 +13,6 @@ urlpatterns = [
     path('activate/<uidb64>/<time>',activate, name='activate'),
     path('login', login_view, name='login'),
     path('logout', logout_view, name='logout'),
-   
     path('profile',user_profile,name="profile"),
     path('profile/update',user_profile_update,name="profile_update"),
     path('profile/delete/request',send_delete_email,name="delete_request"),
