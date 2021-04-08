@@ -270,3 +270,4 @@ def rate_project(request, projectId):
         return JsonResponse({'success': 'false'})
 
     return render(request, 'project_rate.html')
+ 

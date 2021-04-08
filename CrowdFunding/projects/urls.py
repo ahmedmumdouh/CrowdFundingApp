@@ -15,7 +15,4 @@ urlpatterns = [
     # path('new_donate.html/<int:projectId>',views.new_donate, name='new_donate'),
     path('delete/<int:project_id>', views.deleteProject, name='deleteProject'),
 
-
-
-
 ]

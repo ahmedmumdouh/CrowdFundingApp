@@ -87,11 +87,11 @@
                 </h3>
             </div>
             <div style="margin-left:5%;">
-                <a class="btn btn-danger" href="{% url 'create_report_project' project.id %}">Report</a>
+                <a class="btn btn-danger ol-1 col-md-1" href="{% url 'create_report_project' project.id %}">Report</a>
                 <button id="second" type="button" class="  col-1 col-md-1 btn btn-success" data-toggle="modal"
                     data-target="#exampleModal">Donate </button>
 
-                <a class="btn btn-warning" href="{% url 'project_rate' project.id %}">Rate</a>
+
             </div>
 
         </div>
@@ -155,13 +155,16 @@
                 {% if comm.user_id_id == current_user.id %}
 
 
-                <a href="{% url 'delete_comment' project.id  comm.id%}">Delete</a>
-                <a href=" {% url 'edit_comment' project.id comm.id %}">Edit</a>
-                <a href=" {% url 'create_report_comment' project.id comm.id %}">Report</a>
+                <a class="btn btn-primary" href="{% url 'delete_comment' project.id  comm.id%}">Delete</a>
+                <a class="btn btn-warning" href=" {% url 'edit_comment' project.id comm.id %}">Edit</a>
+                <a class="btn btn-danger" href=" {% url 'create_report_comment' project.id comm.id %}">Report</a>
+
                 {% else %}
-                <a href=" {% url 'create_report_comment' project.id comm.id %}">Report</a>
+                <a class="btn btn-danger" href=" {% url 'create_report_comment' project.id comm.id %}">Report</a>
                 {%endif%}
             </td>
+
+        </tr>
 
         </tr>
         {%endfor%}
