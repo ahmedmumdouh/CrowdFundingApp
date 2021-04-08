@@ -163,13 +163,13 @@
 
             <td> <a href="{% url 'delete_comment' project.id  comm.id%}">Delete</a>
                 <a href=" {% url 'edit_comment' project.id comm.id %}">Edit</a>
-                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalll">
+                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#s{{comm.id}}">
                              Report
                    </button>
 
 
 <!--      MODAL FOR COMMENT           -->
-                <div class="modal fade" id="exampleModalll" tabindex="-1" aria-labelledby="exampleModalLabelll" aria-hidden="true">
+                <div class="modal fade" id="#s{{comm.id}}" tabindex="-1" aria-labelledby="exampleModalLabelll" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
