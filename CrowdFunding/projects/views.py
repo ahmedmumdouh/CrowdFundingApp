@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from projects.models import Project, Picture, Tag, ProjectRate
+from django.db.models import Avg
 from comments.models import Comments
 from .models import Donate
 from pusers.models import PUsers
@@ -85,6 +86,8 @@ def show(request, project_id):
     all_comment = Comments.objects.all()
     current_user = request.user
     # /////////////////////////////////////////////////////////////////////////////
+    highestRating =ProjectRate.objects.values('project_id').annotate(average_rating=Avg('value')).filter(project_id = project_id)
+
 
    
     
@@ -170,7 +173,8 @@ def show(request, project_id):
                       'form': form,
                       'donates': all_donate,
                       'formm': formm,
-                      'object': projectObject
+                      'object': projectObject,
+                      'test': highestRating
 
                   })
 
