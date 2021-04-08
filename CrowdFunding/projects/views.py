@@ -9,6 +9,7 @@ from .forms import NewDonateForm
 import datetime
 from django.db.models import Q
 from django.http import JsonResponse
+from django.http import HttpResponse
 
 
 def index(request):
@@ -234,9 +235,12 @@ def deleteOldTags(tags):
 
 def deleteProject(request, project_id):
     project = get_object_or_404(Project, id=project_id)
-    deleteOldImages(project)
-    project.delete()
-    return redirect('projects')
+    if project.total_donate <  (project.total_target * 25/100 ):
+        deleteOldImages(project)
+        project.delete()
+        return redirect('/projects/my_projects?status=post deleted successfully')
+    else:
+        return  redirect('/projects/my_projects?status=you can\'t delete this post')
 
 
 def rate_project(request, projectId):
@@ -269,3 +273,9 @@ def rate_project(request, projectId):
         return JsonResponse({'success': 'false'})
 
     return render(request, 'project_rate.html')
+
+
+def list_my_projects(request):
+    my_projects = Project.objects.filter(owner_id=request.user.id)
+    status = request.GET.get('status')
+    return render(request,'projects/my_projects.html',{'projects':my_projects,'status':status})

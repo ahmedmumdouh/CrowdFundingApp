@@ -14,8 +14,6 @@ urlpatterns = [
     path('project_rate/<int:projectId>',views.rate_project, name='project_rate'),
     # path('new_donate.html/<int:projectId>',views.new_donate, name='new_donate'),
     path('delete/<int:project_id>', views.deleteProject, name='deleteProject'),
-
-
-
+    path('my_projects',views.list_my_projects,name="myProjects")
 
 ]
