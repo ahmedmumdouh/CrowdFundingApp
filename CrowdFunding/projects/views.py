@@ -86,7 +86,7 @@ def show(request, project_id):
     all_comment = Comments.objects.all()
     current_user = request.user
     # /////////////////////////////////////////////////////////////////////////////
-    highestRating =ProjectRate.objects.values('project_id').annotate(average_rating=Avg('value')).filter(project_id = project_id)
+    rate_of_project =ProjectRate.objects.values('project_id').annotate(average_rating=Avg('value')).filter(project_id = project_id)
 
 
    
@@ -174,7 +174,7 @@ def show(request, project_id):
                       'donates': all_donate,
                       'formm': formm,
                       'object': projectObject,
-                      'test': highestRating
+                      'rate_of_project': rate_of_project
 
                   })
 

@@ -3,11 +3,20 @@
 {% block is_authenticated %}
 
 <div class="container d-flex justify-content-center">
-<form action="{% url 'create_report_comment' projectId commentId %}"  class="post-form" method="post">
-    {% csrf_token %}
-    <div class="form-group">
-         {{ form.as_p }}
-    </div>
-    <button  class="btn btn-primary" type="submit">Report</button>
-</form></div>
+
+
+            <form action="{% url 'create_report_comment' projectId commentId %}"  class="post-form" method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                     {{ form.title }}
+                </div>
+                <div class="form-group">
+
+
+                     {{ form.body_comment }}
+                </div>
+                <button  class="btn btn-primary" type="submit">Report comment</button>
+            </form>
+          </div>
 {% endblock  %}

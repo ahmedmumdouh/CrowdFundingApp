@@ -7,9 +7,12 @@
 <form action="{% url 'create_report_project' projectId  %}"  class="post-form" method="post">
     {% csrf_token %}
     <div class="form-group">
-         {{ form.as_p }}
+         {{ form.title }}
     </div>
-    <button  class="btn btn-primary" type="submit">Report</button>
+    <div class="form-group">
+         {{ form.body_project }}
+    </div>
+    <button  class="btn btn-primary" type="submit">Report project</button>
 </form></div>
 
 
