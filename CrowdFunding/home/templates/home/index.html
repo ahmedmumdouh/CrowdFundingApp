@@ -100,9 +100,7 @@ hr {
        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
-
 {% block is_authenticated %}
-
 <div class="container row" >
 <div class="w-1 p-3 col-xs-6" >
     <form method="post" action="{% url 'searchName'  %}" style="margin: 0">
@@ -129,6 +127,95 @@ hr {
         </form>
 </div>
 </div>
+
+<!---->
+
+
+
+
+<div class="row col-md-1 ml-6  "></div>
+    <h4 class="display-4">selected by admin</h4>
+    <div class="row col-md-7 ">
+        <div id="carouselExampleIndicatorsss" class="carousel slide" data-ride="carousel"  style="margin: auto;">
+            <ol class="carousel-indicators">
+              {% for imgadmin in imagesadmin%}
+              <li data-target="#carouselExampleIndicatorsss" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0  %} active {%endif%}"></li>
+              {% endfor %}
+
+            </ol>
+
+
+            <div class="carousel-inner">
+                {% for imgadmin in imagesadmin%}
+                <div class="carousel-item {% if forloop.counter0 == 0  %} active {%endif%}">
+                    <img src="/media/{{imgadmin.image}}" class="img-fluid"  alt="">
+
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{imgadmin.project.title}}</h5>
+                        <a class="btn btn-primary" href="{% url 'viewProject' imgadmin.project.id %}">show details</a>
+                </div>
+                </div>
+              {% endfor %}
+            </div>
+
+
+
+            <a class="carousel-control-prev" href="#carouselExampleIndicatorsss" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicatorsss" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+    </div>
+
+<!---->
+
+
+<div class="row col-md-1 "></div>
+    <h4 class="display-4">highest score projects</h4>
+
+    <div class="row col-md-7 ">
+        <div id="carouselExampleIndicatorss" class="carousel slide" data-ride="carousel"  style="margin: auto;">
+            <ol class="carousel-indicators">
+              {% for imagerate in imagesrate%}
+              <li data-target="#carouselExampleIndicatorss" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0  %} active {%endif%}"></li>
+              {% endfor %}
+
+            </ol>
+
+
+            <div class="carousel-inner">
+                {% for imagerate in imagesrate%}
+                <div class="carousel-item {% if forloop.counter0 == 0  %} active {%endif%}">
+                    <img src="/media/{{imagerate.image}}" class="img-fluid"  alt="">
+
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{imagerate.project.title}}</h5>
+                        <a class="btn btn-primary" href="{% url 'viewProject' imagerate.project.id %}">show details</a>
+                </div>
+                </div>
+              {% endfor %}
+            </div>
+
+
+
+            <a class="carousel-control-prev" href="#carouselExampleIndicatorss" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicatorss" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+    </div>
+
+
+
+
 
 
 
