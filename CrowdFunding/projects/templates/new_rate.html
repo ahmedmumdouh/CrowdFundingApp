@@ -13,7 +13,9 @@
 
     }
 </style>
-{% block content %}
+{% extends 'home/base.html' %}
+{% load static %}
+{% block is_authenticated %}
 
 <div>
     <form class="rate-form" action="{% url 'project_rate' object.id %}" method="POST" id={{object.id}}>

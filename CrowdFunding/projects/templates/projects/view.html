@@ -1,7 +1,7 @@
 {% extends 'home/base.html' %}
 {% load static %}
-{% block content %}
-
+{% block is_authenticated %}
+<div class="container">
 <style>
     .checked {
         color: orange;
@@ -163,20 +163,26 @@
 
 </div>
 
-<div class="row">
-    {% for images in related_projects_images %}
-    <div class="col-md-3 col-12">
-        <div class="card">
-            <img class="card-img-top" src="/media/{{images.image}}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">{{images.project.title}}</h5>
-                <p class="card-text">{{images.project.details}}</p>
-                <a href="{% url 'viewProject' images.project_id %}" class="btn btn-link">View Project</a>
-            </div>
+    <div class="row">
+        {% for images in related_projects_images %}
+        <div class="col-md-3 col-12">
+            <div class="card">
+                <img class="card-img-top" src="/media/{{images.image}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{images.project.title}}</h5>
+                    <p class="card-text">{{images.project.details}}</p>
+                    <a href="{% url 'viewProject' images.project_id %}" class="btn btn-link">View Project</a>
+                </div>
 
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+
+
+
+
+ 
 
 
     <form method="POST" novalidate style="margin-left: 15%;display: inline-block;">
@@ -188,7 +194,7 @@
 
     <!--  -->
 
-
+</div>
     <script>
 
         console.log("enrter");
@@ -368,7 +374,8 @@
 
 
     </script>
-    {% endblock %}
+
+{% endblock %}
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"

@@ -171,13 +171,21 @@ def user_profile(request):
 
 
 def send_delete_email(request):
-    user = request.user
-    current_site = get_current_site(request)
-    email = user.email
-    email_subject = "Delete your account"
-    email_body = "pusers/acc_del_email.html"
-    send_email(user, current_site, email, email_body, email_subject)
-    return render(request, "pusers/delete_account_email.html", {"delete_code": -1})
+    if request.POST:
+        email = request.user.email
+        password = request.POST.get('confirm_pass')  
+        print(password)
+        user = authenticate(email=email, password=password)
+        if user:
+            user = request.user
+            current_site = get_current_site(request)
+            email = user.email
+            email_subject = "Delete your account"
+            email_body = "pusers/acc_del_email.html"
+            send_email(user, current_site, email, email_body, email_subject)
+            return render(request, "pusers/delete_account_email.html", {"delete_code": -1})
+    return  render(request, "pusers/user_profile.html")
+
 
 
 def delete_account(request, uidb64, time):

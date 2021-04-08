@@ -1,4 +1,6 @@
-{% block content %}
+{% extends 'home/base.html' %}
+{% load static %}
+{% block is_authenticated %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <form method="POST" novalidate>
     {% csrf_token %}

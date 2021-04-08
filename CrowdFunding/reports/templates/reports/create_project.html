@@ -1,4 +1,7 @@
-{% block content %}
+{% extends 'home/base.html' %}
+{% load static %}
+{% block is_authenticated %}
+
 
 
 <form action="{% url 'create_report_project' projectId  %}" method="post">
@@ -6,4 +9,4 @@
     {{ form.as_p }}
     <button type="submit">Report</button>
 </form>
-{% endblock content %}
+{% endblock  %}
