@@ -170,7 +170,8 @@ def show(request, project_id):
                       'form': form,
                       'donates': all_donate,
                       'formm': formm,
-                      'object': projectObject
+                      'object': projectObject,
+                      'current_user':current_user
 
                   })
 

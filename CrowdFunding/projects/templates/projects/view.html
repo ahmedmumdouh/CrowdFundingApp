@@ -151,9 +151,16 @@
             <td> {{comm.Create_db}}</td>
 
 
-            <td> <a href="{% url 'delete_comment' project.id  comm.id%}">Delete</a>
+            <td>
+                {% if comm.user_id_id == current_user.id %}
+
+
+                <a href="{% url 'delete_comment' project.id  comm.id%}">Delete</a>
                 <a href=" {% url 'edit_comment' project.id comm.id %}">Edit</a>
                 <a href=" {% url 'create_report_comment' project.id comm.id %}">Report</a>
+                {% else %}
+                <a href=" {% url 'create_report_comment' project.id comm.id %}">Report</a>
+                {%endif%}
             </td>
 
         </tr>
