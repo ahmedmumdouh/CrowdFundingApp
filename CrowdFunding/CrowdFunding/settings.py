@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'widget_tweaks',
     'pusers',
     'home',
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'CrowdFunding.urls'
@@ -72,6 +74,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',  # <--
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -85,8 +89,8 @@ WSGI_APPLICATION = 'CrowdFunding.wsgi.application'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'ahmedmumdouh94@gmail.com'
-EMAIL_HOST_PASSWORD = '0980980_sS'
+EMAIL_HOST_USER = 'crowd.funding.app2021@gmail.com'
+EMAIL_HOST_PASSWORD = 'ASDasd123@'
 EMAIL_PORT = 587
 
 
@@ -160,3 +164,14 @@ MEDIA_URL = '/media/'
 
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '881702965723275'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '9832f2ac33277d5a54b9aa9e024458ee'  # App Secret
