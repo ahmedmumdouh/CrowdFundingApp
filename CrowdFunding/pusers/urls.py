@@ -18,5 +18,8 @@ urlpatterns = [
     path('profile/delete/request',send_delete_email,name="delete_request"),
     path('profile/delete/response/<uidb64>/<time>',delete_account, name='account_delete'),
 
+      
+ 
 
 ]
+

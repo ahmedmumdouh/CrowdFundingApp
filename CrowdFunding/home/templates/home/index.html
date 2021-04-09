@@ -223,27 +223,23 @@ hr {
 <div class="row col-md-12 p-4">
 
     <div class="row col-md-3 ">
-        <table class="table" style="border: 1px solid;">
-            <thead class="thead-dark">
-                <tr>
-                    <th>category</th>           
-                </tr>
-            </thead>
-            <tbody style="height: 230px; overflow-y: auto; display: block;">
-                {% for cat in all_category %}
-                <tr>    
-                    <td> {{ cat.name }} </td>
-                </tr>
-                {%endfor%}
-            </tbody>
-        </table>
+        <div class="list-group col-md-12">
+            <a  class="list-group-item list-group-item-action  list-group-item-dark active">
+              Project Categories
+            </a>
+            {% for cat in all_category %}
+            <a href="#" class="list-group-item list-group-item-action"> {{ cat.name }} </a>
+            {%endfor%}
+          </div>
     </div>
 
-
+    <!--  -->
+   
+<!--  -->
 
     <div class="row col-md-1 "></div>
 
-    <div class="row col-md-7 ">
+    <div class="row col-md-8 ">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"  style="margin: auto;">
             <ol class="carousel-indicators">
               {% for image in images%}
