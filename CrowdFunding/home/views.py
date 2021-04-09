@@ -115,23 +115,25 @@ def searchName(request):
         result = request.POST.get('search_name')
 
         results = Project.objects.filter(title=result)
+        resultss = Tag.objects.filter(tag=result)
+        all = Tag.objects.filter(tag="qwe")
+        print(all)
+
+        print(results)
+        print(resultss)
+        print(result)
+
+
+
         context = {
             "results": results,
+            "resultss": resultss,
+
             "yoursearch": result
         }
         return render(request, 'home/searchResults.html', context)
 
-def searchTag(request):
 
-    if request.method == 'POST':
-        result = request.POST.get('search_tag')
-        resultss = Tag.objects.filter(tag=result)
-      #  results = Project.objects.filter(tag=resultss)
-        context = {
-            "results": resultss,
-            "yoursearch": result
-        }
-        return render(request, 'home/searchResultsTag.html', context)
 
 def delete_category(request, category_id):
    category = Category.objects.get(pk = category_id)

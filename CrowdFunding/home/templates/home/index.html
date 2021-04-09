@@ -124,23 +124,12 @@
                 <div class="form-outline">
                     <input id="search_name" type="search" id="form1" name="search_name" class="form-control" />
                 </div>
-                <button id="searchTag_submit" type="submit" class="btn btn-outline-primary">search by title</button>
+                <button id="searchTag_submit" type="submit" class="btn btn-outline-primary">search</button>
 
             </div>
         </form>
     </div>
-    <div class="w-1 p-3 col-xs-6">
-        <form method="post" action="{% url 'searchTag'  %}" style="margin: 0">
-            {% csrf_token %}
-            <div class="input-group">
-                <div class="form-outline">
-                    <input id="search_tag" type="search" name="search_tag" class="form-control" />
-                </div>
-                <button id="searchName_submit" type="submit" class="btn btn-outline-primary">search by tag</button>
-
-            </div>
-        </form>
-    </div>
+    
 </div>
 
 <!---->
