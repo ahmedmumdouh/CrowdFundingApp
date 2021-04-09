@@ -21,5 +21,30 @@
             {% endfor %}
         </tbody>
     </table>
+    
+{% if donates.has_other_pages %}
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+    {% if donates.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{ donates.previous_page_number }}">Previous</a></li>
+    {% else %}
+    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a></li>
+    {% endif %}
+    {% for i in donates.paginator.page_range %}
+      {% if donates.number == i %}
+        <li class="page-item active"><a class="page-link" href="">{{ i }}</a></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if donates.has_next %}
+      <li class="page-item" ><a class="page-link" href="?page={{ donates.next_page_number }}">Next</a></li>
+    {% else %}
+    <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
+    {% endif %}
+    </ul>
+</nav>
+{% endif %}
 </div>
 {% endblock %}
+

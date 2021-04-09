@@ -140,8 +140,16 @@ def delete_category(request, category_id):
 
 
 def my_donate(request):
-    donates = Donate.objects.select_related('project').filter(owner_id=request.user.id)
-    print(donates)
+    all_donates = Donate.objects.select_related('project').filter(owner_id=request.user.id)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(all_donates, 10)
+    try:
+        donates = paginator.page(page)
+    except PageNotAnInteger:
+        donates = paginator.page(1)
+    except EmptyPage:
+        donates = paginator.page(paginator.num_pages)
     return render(request,'home/my_donate.html',{
         'donates':donates
     })

@@ -17,7 +17,15 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
-    projects = Project.objects.select_related('category')
+    all_projects = Project.objects.select_related('category')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(all_projects, 10)
+    try:
+        projects = paginator.page(page)
+    except PageNotAnInteger:
+        projects = paginator.page(1)
+    except EmptyPage:
+        projects = paginator.page(paginator.num_pages)
     return render(request, 'projects/index.html', {'projects': projects})
 
 
