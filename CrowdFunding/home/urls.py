@@ -11,7 +11,9 @@ urlpatterns = [
     path('my_projects',  views.my_projects , name='my_projects'),
     path('searchName', views.searchName, name='searchName'),
     path('searchTag', views.searchTag, name='searchTag'),
-
+    # path('home/category_project/<int:category_id>', views.categoryprojects, name='category_project'),
+    
+    
 ]
 
 
