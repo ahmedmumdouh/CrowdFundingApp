@@ -21,27 +21,15 @@ import json
 # Create your views here.
 
 def index(request):
-<<<<<<< HEAD
-
-   
-=======
     if request.method=='GET':
-         all_category= Category.objects.all()
+        all_category= Category.objects.all()
         latest_projects = Project.objects.order_by('-start_date')[:5]
         admin_projects = Project.objects.order_by('-id')[:5]
-
-        # highestRating = cursor.execute('select projects_project.title, sum(rate)as sumRating from projects_project join projects_projectrate where projects_project.id == projects_projectrate.project_id GROUP by projects_projectrate.project_id order by sumRating DESC limit 5;')
-        #  Project.objects.select_related('category')
-        #  qqq = Project.objects.raw('SELECT  id,title , sum(rate)as sumRating FROM projects_project JOIN projects_projectrate   WHERE id = project_id' )
-        #qqq = ProjectRate.objects.group_by('project_id').count()
         highestRating =ProjectRate.objects.values('project_id').annotate(average_rating=Avg('value')).order_by('-average_rating')[:2]
-
 
         images = []
         imagesrate = []
         imagesadmin= []
-
-
 
         for project in latest_projects:
             images.append(Picture.objects.filter(project_id=project.id).first())
