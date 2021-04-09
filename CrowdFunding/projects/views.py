@@ -13,6 +13,7 @@ import datetime
 from django.db.models import Q
 from django.http import JsonResponse
 from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
@@ -323,6 +324,19 @@ def rate_project(request, projectId):
 
 
 def list_my_projects(request):
-    my_projects = Project.objects.filter(owner_id=request.user.id)
+    my_projects_list = Project.objects.filter(owner_id=request.user.id)
     status = request.GET.get('status')
-    return render(request,'projects/my_projects.html',{'projects':my_projects,'status':status})
+
+    # my_projects_list = Project.objects.select_related('owner').filter(owner_id=request.user.id)
+
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(my_projects_list, 10)
+    try:
+        my_projects = paginator.page(page)
+    except PageNotAnInteger:
+        my_projects = paginator.page(1)
+    except EmptyPage:
+        my_projects = paginator.page(paginator.num_pages)
+
+    return render(request,'projects/my_projects.html',{'my_projects':my_projects,'status':status})
