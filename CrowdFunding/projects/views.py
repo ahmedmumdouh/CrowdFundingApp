@@ -72,6 +72,8 @@ def uploadTags(tags, project):
 
 
 def show(request, project_id, comment_id = 0):
+    json_result=[]
+    flag=False
     project = get_object_or_404(Project, id=project_id)
     images = Picture.objects.filter(project_id=project_id)
     tags = Tag.objects.filter(project_id=project_id)
@@ -93,7 +95,7 @@ def show(request, project_id, comment_id = 0):
     current_user = request.user
     # /////////////////////////////////////////////////////////////////////////////
     rate_of_project =ProjectRate.objects.values('project_id').annotate(average_rating=Avg('value')).filter(project_id = project_id)
-
+    
 
    
     #//////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,7 +181,21 @@ def show(request, project_id, comment_id = 0):
         if (obj):
             obj.value = val
             obj.save()
-            return JsonResponse({'success': 'true', 'value': val}, safe=False)
+            
+            # for cat in projectcat:
+            #     img=Picture.objects.get(project_id=cat.id)
+            #     print(img.image)
+            #     image_path=str(img.image)
+            rate_of_projectt =ProjectRate.objects.values('project_id').annotate(average_rating=Avg('value')).filter(project_id = project_id)
+            total_rate=str(rate_of_projectt[0]['average_rating'])
+
+            print(rate_of_projectt[0]['average_rating'])
+            json_object=dict(total_rate=total_rate)
+            json_result.append(json_object)
+            flag=True
+            return JsonResponse({'success': 'true', 'value':total_rate}, safe=False)
+            # return JsonResponse({'success': 'true', 'value':json.dumps(json_result)}, safe=False)
+            # return JsonResponse({'success': 'true', 'value': val}, safe=False)
         else:
             rate = ProjectRate.objects.create(
 
@@ -187,7 +203,16 @@ def show(request, project_id, comment_id = 0):
                 owner_id=current_user.id,
                 project_id=project_id
             )
-            return JsonResponse({'success': 'true', 'value': val}, safe=False)
+            rate_of_projectt =ProjectRate.objects.values('project_id').annotate(average_rating=Avg('value')).filter(project_id = project_id)
+
+            total_rate=str(rate_of_projectt[0]['average_rating'])
+            # print(total_rate)
+            print(rate_of_projectt[0]['average_rating'])
+            json_object=dict(total_rate=total_rate)
+            json_result.append(json_object)
+            flag=True
+            return JsonResponse({'success': 'true', 'value':total_rate}, safe=False)
+            # return JsonResponse({'success': 'true', 'value': val}, safe=False)
     else:
         return JsonResponse({'success': 'false'})
 
@@ -218,7 +243,8 @@ def show(request, project_id, comment_id = 0):
                       'formReportProject': formReportProject,
                       'formReportComment': formReportComment,
                       'rate_of_project': rate_of_project,
-                      'current_user':current_user
+                      'current_user':current_user,
+                      'flag':flag
 
                   })
 
