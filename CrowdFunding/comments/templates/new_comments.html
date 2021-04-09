@@ -1,4 +1,7 @@
-{% block content %}
+{% extends 'home/base.html' %}
+{% load static %}
+{% block is_authenticated %}
+
 
 <form method="POST" novalidate>
     {% csrf_token %}

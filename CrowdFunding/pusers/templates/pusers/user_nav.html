@@ -11,22 +11,20 @@
                 <a class="nav-link" href="{% url 'index' %}"> Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'pusers:profile' %}">Profile <span class="sr-only">(current)</span></a> 
+                <a class="nav-link" href="{% url 'pusers:profile' %}">Profile <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'projects' %}">Projects <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">Donations <span
-                        class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">Donations <span class="sr-only">(current)</span></a>
             </li>
-            
-          
+
+
 
             {%if request.user.is_admin == 1 %}
             <li class="nav-item active">
-                <a class="nav-link" href="admin/"> Admin Panel <span
-                        class="sr-only">(current)</span></a>
+                <a class="nav-link" href="admin/"> Admin Panel <span class="sr-only">(current)</span></a>
             </li>
             {%endif%}
 
@@ -34,16 +32,22 @@
 
         {%if request.user.is_authenticated%}
         <h5 class="nav-item dropdown" style="margin-right: 10px; color: white;">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Welcome, {{request.user.first_name}} 
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="{% url 'pusers:profile' %}">My-Projects</a>
+                <a class="dropdown-item" href="{% url 'pusers:profile' %}">My-Profile</a>
+                <a class="dropdown-item" href="{% url 'myProjects' %}">My-Projects</a>
                 <a class="dropdown-item" href="#">My-Donates</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item"  href="{% url 'password_reset'%}">Reset your Password</a>                    
+                <a class="dropdown-item"  href="{% url 'password_change'%}">Change your Password</a>   
                 <a class="dropdown-item" href="{% url 'pusers:logout' %}">Logout</a>
+
             </div>
         </h5>
-        <img src="{{request.user.photo.url}}" alt="" width="50px" height="50px" style="margin-right: 10px; border-radius: 50%;"/>
+        <img src="{{request.user.photo.url}}" alt="" width="50px" height="50px"
+            style="margin-right: 10px; border-radius: 50%;" />
         <!-- <a href="{% url 'pusers:logout' %}" class="btn btn-primary btn-md active" role="button" aria-pressed="true">Log
             out</a> -->
         {%else%}

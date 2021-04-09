@@ -23,7 +23,53 @@
         </div>
         <div class="card-footer text-muted">
             <a href="{%  url 'pusers:profile_update' %}" class="btn btn-primary">Update Your Account</a>
-            <a href="{%  url 'pusers:delete_request' %}" class="btn btn-danger">Delete Your Account</a>
+            <!--  -->
+            
+
+
+
+                        <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                Delete Your Account
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm with your password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                   <form method="post" action="{%  url 'pusers:delete_request' %}" >
+                        <div class="modal-body">
+                            <!--  -->
+                            <!-- <input type="password" name="confirm_pass" placeholder="Enter Your Password here ..."> -->
+
+                            
+                                {% csrf_token %}
+                                
+                                            
+                            <input id="confirm_pass" type="password" name="confirm_pass" id="form1"  placeholder="Confirm Password here ..."/>
+                                       
+                                    
+    
+                               
+                        
+                            <!--  -->
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <!-- <a href="" class="btn btn-danger"></a> -->
+                        <button  id="searchTag_submit" type="submit" class="btn btn btn-danger">Confirm Delete</button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+            <!--  -->
         </div>
     </div>
 </div>

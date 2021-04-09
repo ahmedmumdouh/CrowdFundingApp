@@ -1,4 +1,7 @@
-{%  block content %}
+{% extends 'home/base.html' %}
+{% load static %}
+{% block is_authenticated %}
+
 {%  for one in all_projects  %}
 
 <h1>{{ one.title }} </h1>
@@ -10,7 +13,7 @@
 {% endfor %}
 
 
-{%  endblock content %}
+{%  endblock  %}
 
 
 

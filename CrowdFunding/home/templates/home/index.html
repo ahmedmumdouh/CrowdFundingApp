@@ -1,134 +1,236 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block head-css %}
-    
+
 {% endblock %}
 {% load bootstrap4 %}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
 {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+
 <style>
-/* The alert message box */
-.alert {
-  padding: 20px;
-  background-color: #f44336; /* Red */
-  color: white;
-  margin-bottom: 15px;
-}
+    /* The alert message box */
+    .alert {
+        padding: 20px;
+        background-color: #f44336;
+        /* Red */
+        color: white;
+        margin-bottom: 15px;
+    }
 
-/* The close button */
-.closebtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+    /* The close button */
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
 
-/* When moving the mouse over the close button */
-.closebtn:hover {
-  color: black;
-}
-.slideCss {
-    width: 100%;
-    height: 380px;
-}
+    /* When moving the mouse over the close button */
+    .closebtn:hover {
+        color: black;
+    }
 
-.slide_show {
-    width: 100%;
-}
+    .slideCss {
+        width: 100%;
+        height: 380px;
+    }
 
-.latestproject {
-    margin-top: 2%;
-}
+    .slide_show {
+        width: 100%;
+    }
 
-.fproject {
-    margin-top: 2%;
-    width: 18%;
-    margin-left: 2%;
-}
+    .latestproject {
+        margin-top: 2%;
+    }
 
-.desc {
-    max-lines: 1;
-    line-height: 20px;
-    max-height: 20px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    .fproject {
+        margin-top: 2%;
+        width: 18%;
+        margin-left: 2%;
+    }
 
-    margin-left: 35%;
-    font-style: oblique;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #3a6073;
-}
+    .desc {
+        max-lines: 1;
+        line-height: 20px;
+        max-height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
-hr {
-    width: 120px;
-    margin-top: 10px;
-    margin-left: 43%;
-    background-color: #16222A;
-}
+        margin-left: 35%;
+        font-style: oblique;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #3a6073;
+    }
 
-.categs {
-    width: 12%;
-    height: 12%;
-    margin: 3%;
-}
+    hr {
+        width: 120px;
+        margin-top: 10px;
+        margin-left: 43%;
+        background-color: #16222A;
+    }
 
-.sliderTitle {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 50px;
-    /*font-style: bold; */
+    .categs {
+        width: 12%;
+        height: 12%;
+        margin: 3%;
+    }
 
-}
+    .sliderTitle {
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size: 50px;
+        /*font-style: bold; */
 
-.sliderDesc {
-    font-family: initial;
-    font-size: 25px;
-    font-style: oblique;
-    max-lines: 1;
-    line-height: 30px;
-    max-height: 60px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    
-}
+    }
+
+    .sliderDesc {
+        font-family: initial;
+        font-size: 25px;
+        font-style: oblique;
+        max-lines: 1;
+        line-height: 30px;
+        max-height: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+
+
+
+    .my_btn {
+        background-color: inherit !important;
+        border: 0 !important;
+
+    }
 </style>
-    
-       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
-
 {% block is_authenticated %}
-
 <div class="container row" >
 <div class="w-1 p-3 col-xs-6" >
     <form method="post" action="{% url 'searchName'  %}" style="margin: 0">
             {% csrf_token %}
-                            <div class="input-group">
-                                          <div class="form-outline">
-                                            <input id="search_name" type="search" id="form1"  name="search_name"  class="form-control" />
-                                          </div>
-                                <button  id="searchTag_submit" type="submit" class="btn btn-outline-primary">search by title</button>
+            <div class="input-group">
+                <div class="form-outline">
+                    <input id="search_name" type="search" id="form1" name="search_name" class="form-control" />
+                </div>
+                <button id="searchTag_submit" type="submit" class="btn btn-outline-primary">search by title</button>
 
-                            </div>
+            </div>
         </form>
-</div>
-<div class="w-1 p-3 col-xs-6" >
-    <form method="post" action="{% url 'searchTag'  %}" style="margin: 0">
+    </div>
+    <div class="w-1 p-3 col-xs-6">
+        <form method="post" action="{% url 'searchTag'  %}" style="margin: 0">
             {% csrf_token %}
-                            <div class="input-group">
-                                          <div class="form-outline">
-                                            <input id="search_tag" type="search" name="search_tag"  class="form-control" />
-                                          </div>
-                                <button  id="searchName_submit" type="submit" class="btn btn-outline-primary">search by tag</button>
+            <div class="input-group">
+                <div class="form-outline">
+                    <input id="search_tag" type="search" name="search_tag" class="form-control" />
+                </div>
+                <button id="searchName_submit" type="submit" class="btn btn-outline-primary">search by tag</button>
 
-                            </div>
+            </div>
         </form>
+    </div>
 </div>
-</div>
+
+<!---->
+
+
+
+
+<div class="row col-md-1 ml-6 "></div>
+    <h4 class="display-4">selected by admin</h4>
+    <div class="row col-md-7 ">
+        <div id="carouselExampleIndicatorsss" class="carousel slide" data-ride="carousel"  style="margin: auto;">
+            <ol class="carousel-indicators">
+              {% for imgadmin in imagesadmin%}
+              <li data-target="#carouselExampleIndicatorsss" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0  %} active {%endif%}"></li>
+              {% endfor %}
+
+            </ol>
+
+
+            <div class="carousel-inner">
+                {% for imgadmin in imagesadmin%}
+                <div class="carousel-item {% if forloop.counter0 == 0  %} active {%endif%}">
+                    <img src="/media/{{imgadmin.image}}" class="img-fluid"  alt="">
+
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{imgadmin.project.title}}</h5>
+                        <a class="btn btn-primary" href="{% url 'viewProject' imgadmin.project.id %}">show details</a>
+                </div>
+                </div>
+              {% endfor %}
+            </div>
+
+
+
+            <a class="carousel-control-prev" href="#carouselExampleIndicatorsss" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicatorsss" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+    </div>
+
+<!---->
+
+
+<div class="row col-md-1 "></div>
+    <h4 class="display-4">highest score projects</h4>
+
+    <div class="row col-md-7 ">
+        <div id="carouselExampleIndicatorss" class="carousel slide" data-ride="carousel"  style="margin: auto;">
+            <ol class="carousel-indicators">
+              {% for imagerate in imagesrate%}
+              <li data-target="#carouselExampleIndicatorss" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0  %} active {%endif%}"></li>
+              {% endfor %}
+
+            </ol>
+
+
+            <div class="carousel-inner">
+                {% for imagerate in imagesrate%}
+                <div class="carousel-item {% if forloop.counter0 == 0  %} active {%endif%}">
+                    <img src="/media/{{imagerate.image}}" class="img-fluid"  alt="">
+
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{imagerate.project.title}}</h5>
+                        <a class="btn btn-primary" href="{% url 'viewProject' imagerate.project.id %}">show details</a>
+                </div>
+                </div>
+              {% endfor %}
+            </div>
+
+
+
+            <a class="carousel-control-prev" href="#carouselExampleIndicatorss" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicatorss" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+    </div>
+
+
+
+
 
 
 
@@ -136,60 +238,57 @@ hr {
 <div class="row col-md-12 p-4">
 
     <div class="row col-md-3 ">
-        <table class="table" style="border: 1px solid;">
-            <thead class="thead-dark">
-                <tr>
-                    <th>category</th>           
-                </tr>
-            </thead>
-            <tbody style="height: 230px; overflow-y: auto; display: block;">
-                {% for cat in all_category %}
-                <tr>    
-                    <td> {{ cat.name }} </td>
-                </tr>
-                {%endfor%}
-            </tbody>
-        </table>
+        <div class="list-group col-md-12">
+            <a  class="list-group-item list-group-item-action  list-group-item-dark active">
+              Project Categories
+            </a>
+            {% for cat in all_category %}
+            <a href="#" class="list-group-item list-group-item-action"> {{ cat.name }} </a>
+            {%endfor%}
+          </div>
     </div>
 
-
+    <!--  -->
+   
+<!--  -->
 
     <div class="row col-md-1 "></div>
 
-    <div class="row col-md-7 ">
+    <div class="row col-md-8 ">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"  style="margin: auto;">
             <ol class="carousel-indicators">
-              {% for image in images%}
-              <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0  %} active {%endif%}"></li>
-              {% endfor %}
+                {% for image in images%}
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}"
+                    class="{% if forloop.counter0 == 0  %} active {%endif%}"></li>
+                {% endfor %}
 
             </ol>
 
-            
+
             <div class="carousel-inner">
                 {% for image in images %}
                 <div class="carousel-item {% if forloop.counter0 == 0  %} active {%endif%}">
-                    <img src="/media/{{image.image}}" class="img-fluid"  alt="">
-              
+                    <img src="/media/{{image.image}}" class="img-fluid" alt="">
+
                     <div class="carousel-caption d-none d-md-block">
                         <h5>{{image.project.title}}</h5>
                         <a class="btn btn-primary" href="{% url 'viewProject' image.project.id %}">show details</a>
+                    </div>
                 </div>
-                </div>
-              {% endfor %}
+                {% endfor %}
             </div>
-           
-            
+
+
 
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
             </a>
             <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
             </a>
-          </div>
+        </div>
     </div>
 </div>
 
@@ -210,7 +309,7 @@ hr {
 
         {% for project in latest_projects %}
 
-        <tr> 
+        <tr>
             <td>{{project.title}}</td>
             <td>{{project.details}}</td>
             <td>{{project.category.name}}</td>
@@ -224,7 +323,7 @@ hr {
 
 
 
-            
+
         </tr>
 
         {%endfor%}
@@ -234,12 +333,37 @@ hr {
 
 
 
-{% endblock %}
+
+<ul class="nav justify-content-center">
+    <li class="nav-item">
+        {% for cat in all_category %}
+        <form class="rate-form" action="{% url 'index' %}" method="POST" id={{cat.id}}>
+            {% csrf_token %}
+            <button type="submit" class="my_btn" value={{cat.id}} id={{cat.id}}>{{ cat.name }}</button>
+            {%endfor%}
+        </form>
+    </li>
+</ul>
+
+</div>
+<br>
+<div class="container">
+    <div class="row col-md-12 justify-content-center" id="confirm-box">
+
+    </div>
+</div>
+<br>
+<div>
+</div>
 
 
 
 
-  <!-- .table-fixed tbody {
+
+
+
+
+<!-- .table-fixed tbody {
     height: 230px;
     overflow-y: auto;
     width: 100%;
@@ -247,3 +371,104 @@ hr {
   .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
     display: block;
   } -->
+
+
+<script>
+
+    arr = document.getElementsByClassName("my_btn")
+    const form = document.querySelector('.rate-form')
+    const confirmBox = document.getElementById('confirm-box')
+    const csrf = document.getElementsByName('csrfmiddlewaretoken')
+    for (var ad of arr)
+        // console.log(ad);
+        ad.addEventListener('click', (event) => {
+            const val = event.target.id
+            console.log(val);
+            form.addEventListener('submit', e => {
+                e.preventDefault()
+                const id = e.target.id
+                // console.log(id);
+                // const val_num = getNumericValue(val)
+
+                $.ajax({
+
+                    type: 'POST',
+                    url: `/`,
+                    data: {
+
+                        'csrfmiddlewaretoken': csrf[0].value,
+                        // 'el_id': val,
+                        'val': val
+
+                    },
+                    success: function (response) {
+
+                        console.log(response);
+
+                        // console.log(id);
+                        list_project = JSON.parse(response.value)
+                        console.log(list_project);
+                        confirmBox.innerHTML = ''
+                        for (project of list_project) {
+                            console.log(project.image);
+                            confirmBox.innerHTML += `
+                            
+                            <div class="card col-md-3 mr-4 mb-3" style="width: 18rem;height:18rem">
+  <img src="/media/${project.image}" class="card-img-top " style="width: 99%;margin: auto;height:50%" alt="...">
+  <div class="card-body">
+    <h5 class="card-title text-center">${project.title}</h5>
+    <div class="card-text text-center"><span style="color:blue ">Total Target : </span> ${project.total_target} $</div>
+  </div>
+  <div class=" text-center mb-2">
+         <a href= "/projects/view/${project.project_id}" class="btn btn-primary btn-block">View</a>
+
+  </div>
+</div>
+  
+                            
+                            `
+                        }
+
+                    },
+                    error: function (error) {
+                        // console.log(id);
+                        console.log(error);
+                        confirmBox.innerHTML = '<h1>UPS.........something went wrong</h1>'
+
+                    }
+
+
+
+
+
+
+                })
+
+
+
+            })
+
+        })
+
+
+
+
+
+
+</script>
+
+
+
+
+
+{% endblock %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+    integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+    crossorigin="anonymous"></script>
+
+<script>

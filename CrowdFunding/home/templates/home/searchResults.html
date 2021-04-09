@@ -1,28 +1,18 @@
-
-
 {% extends "home/base.html" %}
 {% load bootstrap4 %}
 {% block content %}
-{%  if results %}
-{%  for one in results  %}
+{% if results %}
+{% for one in results %}
 <div class="card">
 
   <div class="card-body">
-        <h4 class="card-title">{{ one.title }}</h4>
+    <h4 class="card-title">{{ one.title }}</h4>
     <p class="card-text">{{ one.details }}</p>
     <a href="{% url 'viewProject' one.id %}" class="btn btn-primary">view</a>
   </div>
 </div>
 {% endfor %}
 {% else %}
-<h2 style="color: brown"><span style="color: darkblue" >{{ yoursearch }}</span> not found ya prence </h2>
+<h2 style="color: brown"><span style="color: darkblue">{{ yoursearch }}</span> not found ya prence </h2>
 {% endif %}
 {% endblock %}
-
-
-
-
-
-
-
-
