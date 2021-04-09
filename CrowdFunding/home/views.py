@@ -10,12 +10,12 @@ from .forms import NewCategoryForm
 from projects.models import Project
 from projects.models import Picture
 from projects.models import Tag
-from projects.models import ProjectRate
+from projects.models import ProjectRate, Donate
 from django.db.models import Avg
 
 import json
 
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
@@ -107,15 +107,7 @@ def show(request):
      return render(request,'category/show.html',{'category':all_category})
 
 
-def my_projects(request):
-    my_projects = Project.objects.select_related('owner').filter(owner_id=request.user.id)
-    # images = Picture.objects.filter(project_id=project_id)
-    # tags = Tag.objects.filter(project_id=project_id)
-    # comments=Comments.objects.filter(project_id=project_id)
-    # category = Category.objects.get(id=project.category_id)
-    # current_user = request.user
-    # userObject=PUsers.objects.get(id=current_user.id)
-    return render(request,'my_projects/show.html',{'my_projects':my_projects})
+
 
 def searchName(request):
 
@@ -145,3 +137,19 @@ def delete_category(request, category_id):
    category = Category.objects.get(pk = category_id)
    category .delete()
    return redirect('show')
+
+
+def my_donate(request):
+    all_donates = Donate.objects.select_related('project').filter(owner_id=request.user.id)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(all_donates, 10)
+    try:
+        donates = paginator.page(page)
+    except PageNotAnInteger:
+        donates = paginator.page(1)
+    except EmptyPage:
+        donates = paginator.page(paginator.num_pages)
+    return render(request,'home/my_donate.html',{
+        'donates':donates
+    })
