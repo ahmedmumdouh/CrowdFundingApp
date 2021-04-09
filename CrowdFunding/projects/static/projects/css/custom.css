@@ -8,11 +8,13 @@ div.carousel::after{
     background-color: rgba(0,0,0,0.1);
 }
 
-div.carousel .carousel-inner .carousel-item img{
-    width: 100vw;
-    max-height: 20vw;
-}
-
 .checked {
     color: orange;
   }
+
+.my_btn {
+    background-color: transparent !important;
+    border: none !important;
+    outline: none;
+
+}
