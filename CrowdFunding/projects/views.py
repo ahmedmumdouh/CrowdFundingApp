@@ -217,7 +217,8 @@ def show(request, project_id, comment_id = 0):
                       'object': projectObject,
                       'formReportProject': formReportProject,
                       'formReportComment': formReportComment,
-                      'rate_of_project': rate_of_project
+                      'rate_of_project': rate_of_project,
+                      'current_user':current_user
 
                   })
 

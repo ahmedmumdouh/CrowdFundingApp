@@ -95,11 +95,12 @@
                              Report
                    </button>
 
-<!--                <a class="btn btn-danger" href="{% url 'create_report_project' project.id %}">Report</a>-->
+
+             
                 <button id="second" type="button" class="  col-1 col-md-1 btn btn-success" data-toggle="modal"
                     data-target="#exampleModal">Donate </button>
 
-                <a class="btn btn-warning" href="{% url 'project_rate' project.id %}">Rate</a>
+
             </div>
 
         </div>
@@ -151,9 +152,10 @@
                 <th>Action</th>
             </tr>
         </thead>
+        {% for comm in comments %}
         <tr>
 
-            {% for comm in comments %}
+            
             <td> {{userObject.first_name}} </td>
             <td> {{ comm.comment }} </td>
             <td> {{comm.Create_db}}</td>
@@ -161,32 +163,44 @@
 
 
 
-            <td> <a href="{% url 'delete_comment' project.id  comm.id%}">Delete</a>
-                <a href=" {% url 'edit_comment' project.id comm.id %}">Edit</a>
-                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#s{{comm.id}}">
-                             Report
-                   </button>
+
+            <td> 
+                {% if comm.user_id_id == current_user.id %}
 
 
-<!--      MODAL FOR COMMENT           -->
+                <a class="btn btn-primary" href="{% url 'delete_comment' project.id  comm.id%}">Delete</a>
+                <a class="btn btn-warning" href=" {% url 'edit_comment' project.id comm.id %}">Edit</a>
+              
+
+                {% else %}
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#s{{comm.id}}">
+                    Report
+                </button>
+                {%endif%}
+                
+                
+                
+
+
+                <!--      MODAL FOR COMMENT           -->
                 <div class="modal fade" id="s{{comm.id}}" tabindex="-1" aria-labelledby="exampleModalLabelll" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-<!--                        {% url 'create_report_project' project.id  %}-->
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                    <!--                        {% url 'create_report_project' project.id  %}-->
 
-                        <form method="POST" novalidate action="{% url 'viewProject1' project.id comm.id %}">
-                            {% csrf_token %}
+                                <form method="POST" novalidate action="{% url 'viewProject1' project.id comm.id %}">
+                                    {% csrf_token %}
 
-                            {%  bootstrap_form  formReportComment     %}
+                                    {%  bootstrap_form  formReportComment     %}
 
 
-                     <button  class="btn btn-primary" type="submit">Report Comment</button>
-                        </form>
+                            <button  class="btn btn-primary" type="submit">Report Comment</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
 
 
@@ -196,11 +210,14 @@
 
 
 
-<!--                END OF MODAL FOR COMMENT -->
+                <!--                END OF MODAL FOR COMMENT -->
+
 
             </td>
 
 
+       
+           
         </tr>
         {%endfor%}
 

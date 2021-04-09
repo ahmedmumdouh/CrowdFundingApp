@@ -87,9 +87,15 @@ def new_category(request):
         if form.is_valid():
             category= form.save
             # comment.save()
-            category=Category.objects.create(
-                name=form.cleaned_data.get('name')               
-            )
+           
+            if(Category.objects.filter(name=form.cleaned_data.get('name') )):
+                return HttpResponse('<h1>This category name is exist</h1>')    
+                return redirect('new_category')
+            else:
+                category=Category.objects.create(
+                    name=form.cleaned_data.get('name')               
+                )
+               
             return redirect('show')
     else:
         form=NewCategoryForm() 
@@ -135,17 +141,7 @@ def searchTag(request):
         }
         return render(request, 'home/searchResultsTag.html', context)
 
-# def categoryprojects(request,category_id):
-#     #  if request.method == 'GET':
-#     #     projectObject = Project.objects.get(id=project_id)
-#     if request.method == 'POST':
-#         val = request.POST.get('id')
-#         obj =Project.objects.filter(category_id=val)
-#         context={
-#             'obj':obj
-#         }
-#         return JsonResponse({'success': 'true', 'value': val}, safe=False)
-#     else:
-#         return JsonResponse({'success': 'false'})
-#     return render(request, 'home/index.html', context)
-
+def delete_category(request, category_id):
+   category = Category.objects.get(pk = category_id)
+   category .delete()
+   return redirect('show')
