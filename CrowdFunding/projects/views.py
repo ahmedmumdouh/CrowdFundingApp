@@ -284,9 +284,9 @@ def deleteProject(request, project_id):
     if project.total_donate <  (project.total_target * 25/100 ):
         deleteOldImages(project)
         project.delete()
-        return redirect('/projects/my_projects?status=post deleted successfully')
+        return redirect('/projects/my_projects?status=project deleted successfully')
     else:
-        return  redirect('/projects/my_projects?status=you can\'t delete this post')
+        return  redirect('/projects/my_projects?status=you can\'t delete this project')
 
 
 def rate_project(request, projectId):
