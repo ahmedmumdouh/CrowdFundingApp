@@ -9,7 +9,7 @@ from comments.models import Comments
 
 class ReportComment(models.Model):
     title= models.CharField(max_length=100, default="Untitiled")
-    body_comment = models.TextField(max_length=4000, null=False, blank=False)
+    body_comment = models.TextField(max_length=4000, null=False, blank=False, default="content")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(PUsers, null=True,on_delete=models.CASCADE)
@@ -21,7 +21,7 @@ class ReportComment(models.Model):
 
 class ReportProject(models.Model):
     title = models.CharField(max_length=100, default="Untitiled")
-    body_project = models.TextField(max_length=4000, null=False, blank=False)
+    body_project = models.TextField(max_length=4000, null=False, blank=False,default="content")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     project = models.ForeignKey(Project, null=True, on_delete=models.CASCADE)

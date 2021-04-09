@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from projects.models import Project, Picture, Tag, ProjectRate
+from django.db.models import Avg
 from comments.models import Comments
+from reports.forms import ReportProjectForm, ReportCommentForm
+from reports.models import ReportProject, ReportComment
 from .models import Donate
 from pusers.models import PUsers
 from home.models import Category
@@ -65,7 +68,10 @@ def uploadTags(tags, project):
         )
 
 
-def show(request, project_id):
+#, commentID
+
+
+def show(request, project_id, comment_id = 0):
     project = get_object_or_404(Project, id=project_id)
     images = Picture.objects.filter(project_id=project_id)
     tags = Tag.objects.filter(project_id=project_id)
@@ -86,13 +92,43 @@ def show(request, project_id):
     all_comment = Comments.objects.all()
     current_user = request.user
     # /////////////////////////////////////////////////////////////////////////////
+    rate_of_project =ProjectRate.objects.values('project_id').annotate(average_rating=Avg('value')).filter(project_id = project_id)
+
 
    
-    
+    #//////////////////////////////////////////////////////////////////////////////////////////////
+    current_user = request.user
+    if request.method == 'POST':
+        formformReportComment = ReportCommentForm(request.POST)
+        if formformReportComment.is_valid():
+            report = ReportComment.objects.create(
+                title=formformReportComment.cleaned_data.get('title'),
+                body_comment=formformReportComment.cleaned_data.get('body_comment'),
+                comment_id=comment_id,
+                user_id=current_user.id
+            )
+            return redirect('viewProject', project_id=project.id)
+    # else:
+    #     form = ReportCommentForm()
+    #     return render(request, "reports/create_comment.html",
+    #                   {'form': form, 'commentId': commentId, 'projectId': project.id})
 
-           
-        
-
+    if request.method == 'POST':
+        formReportProject = ReportProjectForm(request.POST)
+        current_user = request.user
+        if formReportProject.is_valid():
+            # form.save()
+            report = ReportProject.objects.create(
+                title=formReportProject.cleaned_data.get('title'),
+                body_project=formReportProject.cleaned_data.get('body_project'),
+                project_id=project.id,
+                user_id=current_user.id
+            )
+            return redirect('viewProject', project_id = project.id)
+    # else:
+    #     formReport = ReportProjectForm()
+    #     return render(request, "projects/view.html", {'formReport': formReport, 'projectId': projectId})
+    #     # return render(request, "reports/create_project.html", {'form': form,'projectId':projectId})
 
     #//////////////////////////////////////////////////////////////////////////////
     if request.method == 'POST':
@@ -157,6 +193,13 @@ def show(request, project_id):
 
     # return render(request, 'project_rate.html')   
     #/////////////////////////////////////////////////////////////////
+    #Report section
+
+    formReportProject = ReportProjectForm()
+
+    formReportComment = ReportCommentForm()
+
+      #  'commentId': commentId,
 
     return render(request, 'projects/view.html',
                   {
@@ -171,7 +214,10 @@ def show(request, project_id):
                       'form': form,
                       'donates': all_donate,
                       'formm': formm,
-                      'object': projectObject
+                      'object': projectObject,
+                      'formReportProject': formReportProject,
+                      'formReportComment': formReportComment,
+                      'rate_of_project': rate_of_project
 
                   })
 

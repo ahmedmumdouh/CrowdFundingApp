@@ -1,3 +1,4 @@
+from django.db import connection
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse
 import datetime
@@ -7,6 +8,9 @@ from .forms import NewCategoryForm
 from projects.models import Project
 from projects.models import Picture
 from projects.models import Tag
+from projects.models import ProjectRate
+from django.db.models import Avg
+
 
 
 
@@ -14,18 +18,43 @@ from projects.models import Tag
 # Create your views here.
 
 def index(request):
+
     all_category= Category.objects.all()
-    latest_projects = Project.objects.order_by('start_date')[:5]
-    images = [] 
+    latest_projects = Project.objects.order_by('-start_date')[:5]
+    admin_projects = Project.objects.order_by('-id')[:5]
+
+    # highestRating = cursor.execute('select projects_project.title, sum(rate)as sumRating from projects_project join projects_projectrate where projects_project.id == projects_projectrate.project_id GROUP by projects_projectrate.project_id order by sumRating DESC limit 5;')
+    #  Project.objects.select_related('category')
+    #  qqq = Project.objects.raw('SELECT  id,title , sum(rate)as sumRating FROM projects_project JOIN projects_projectrate   WHERE id = project_id' )
+    #qqq = ProjectRate.objects.group_by('project_id').count()
+    highestRating =ProjectRate.objects.values('project_id').annotate(average_rating=Avg('value')).order_by('-average_rating')[:2]
+
+
+    images = []
+    imagesrate = []
+    imagesadmin= []
+
+
+
     for project in latest_projects:
         images.append(Picture.objects.filter(project_id=project.id).first())
+
+    for project in highestRating:
+        imagesrate.append(Picture.objects.filter(project_id=project['project_id']).first())
+
+    for project in admin_projects:
+        imagesadmin.append(Picture.objects.filter(project_id=project.id).first())
 
     context = {
         'all_category': all_category,
         'latest_projects': latest_projects,
-        'images' : images
+        'highestRating': highestRating,
+        'images': images,
+        'imagesrate': imagesrate,
+        'admin_projects': admin_projects,
+        'imagesadmin': imagesadmin,
     }
-    return  render(request , 'home/index.html',context )
+    return  render(request, 'home/index.html',context )
 
 def new_category(request): 
 #    user=User.objects.frist()
