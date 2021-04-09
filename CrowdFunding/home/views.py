@@ -10,7 +10,7 @@ from .forms import NewCategoryForm
 from projects.models import Project
 from projects.models import Picture
 from projects.models import Tag
-from projects.models import ProjectRate
+from projects.models import ProjectRate, Donate
 from django.db.models import Avg
 
 import json
@@ -145,3 +145,11 @@ def delete_category(request, category_id):
    category = Category.objects.get(pk = category_id)
    category .delete()
    return redirect('show')
+
+
+def my_donate(request):
+    donates = Donate.objects.select_related('project').filter(owner_id=request.user.id)
+    print(donates)
+    return render(request,'home/my_donate.html',{
+        'donates':donates
+    })
