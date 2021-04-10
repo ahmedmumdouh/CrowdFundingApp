@@ -10,15 +10,70 @@ from .forms import NewCategoryForm
 from projects.models import Project
 from projects.models import Picture
 from projects.models import Tag
-from projects.models import ProjectRate
+from projects.models import ProjectRate, Donate
 from django.db.models import Avg
 
 import json
 
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
+
+# def index(request):
+#     if request.method=='GET':
+#         all_category= Category.objects.all()
+#         latest_projects = Project.objects.order_by('-start_date')[:5]
+#         admin_projects = Project.objects.order_by('-id')[:5]
+#         highestRating =ProjectRate.objects.values('project_id').annotate(average_rating=Avg('value')).order_by('-average_rating')[:2]
+
+#         images = []
+#         imagesrate = []
+#         imagesadmin= []
+
+#         for project in latest_projects:
+#             images.append(Picture.objects.filter(project_id=project.id).first())
+
+#         for project in highestRating:
+#             imagesrate.append(Picture.objects.filter(project_id=project['project_id']).first())
+
+#         for project in admin_projects:
+#             imagesadmin.append(Picture.objects.filter(project_id=project.id).first())
+
+#         context = {
+#             'all_category': all_category,
+#             'latest_projects': latest_projects,
+#             'highestRating': highestRating,
+#             'images': images,
+#             'imagesrate': imagesrate,
+#             'admin_projects': admin_projects,
+#             'imagesadmin': imagesadmin,
+#         }
+#         return  render(request, 'home/index.html',context )
+#     elif request.method == 'POST':
+#             val = request.POST.get('val')
+#             print(val)
+#             projectcat=Project.objects.filter(category_id=val)
+             
+            
+#             print(projectcat)
+#             # context = {
+#             # 'obj':projectcat
+#             #  }
+#         #    JsonResponse(dict(genres=list(projectcat))
+#             json_result=[]
+#             for cat in projectcat:
+#                 img=Picture.objects.get(project_id=cat.id)
+#                 print(img.image)
+#                 image_path=str(img.image)
+#                 total_target=str(cat.total_target)
+#                 print(image_path)
+#                 json_object=dict(title=cat.title,total_target=total_target,image=image_path,project_id=cat.id)
+#                 json_result.append(json_object)
+#             return JsonResponse({'success': 'true', 'value':json.dumps(json_result)}, safe=False)
+#             # return  render(request , 'home/index.html',{'projectcat':projectcat} )
+#     # else:
+#     #     return JsonResponse({'success': 'false'})\
 
 def index(request):
     if request.method=='GET':
@@ -76,6 +131,8 @@ def index(request):
     #     return JsonResponse({'success': 'false'})
     
     
+    
+    
    
     
 
@@ -107,15 +164,7 @@ def show(request):
      return render(request,'category/show.html',{'category':all_category})
 
 
-def my_projects(request):
-    my_projects = Project.objects.select_related('owner').filter(owner_id=request.user.id)
-    # images = Picture.objects.filter(project_id=project_id)
-    # tags = Tag.objects.filter(project_id=project_id)
-    # comments=Comments.objects.filter(project_id=project_id)
-    # category = Category.objects.get(id=project.category_id)
-    # current_user = request.user
-    # userObject=PUsers.objects.get(id=current_user.id)
-    return render(request,'my_projects/show.html',{'my_projects':my_projects})
+
 
 def searchName(request):
 
@@ -123,25 +172,43 @@ def searchName(request):
         result = request.POST.get('search_name')
 
         results = Project.objects.filter(title=result)
+        resultss = Tag.objects.filter(tag=result)
+        all = Tag.objects.filter(tag="qwe")
+        print(all)
+
+        print(results)
+        print(resultss)
+        print(result)
+
+
+
         context = {
             "results": results,
+            "resultss": resultss,
+
             "yoursearch": result
         }
         return render(request, 'home/searchResults.html', context)
 
-def searchTag(request):
 
-    if request.method == 'POST':
-        result = request.POST.get('search_tag')
-        resultss = Tag.objects.filter(tag=result)
-      #  results = Project.objects.filter(tag=resultss)
-        context = {
-            "results": resultss,
-            "yoursearch": result
-        }
-        return render(request, 'home/searchResultsTag.html', context)
 
 def delete_category(request, category_id):
    category = Category.objects.get(pk = category_id)
    category .delete()
    return redirect('show')
+
+
+def my_donate(request):
+    all_donates = Donate.objects.select_related('project').filter(owner_id=request.user.id)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(all_donates, 10)
+    try:
+        donates = paginator.page(page)
+    except PageNotAnInteger:
+        donates = paginator.page(1)
+    except EmptyPage:
+        donates = paginator.page(paginator.num_pages)
+    return render(request,'home/my_donate.html',{
+        'donates':donates
+    })

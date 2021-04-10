@@ -16,18 +16,17 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'projects' %}">Projects <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Donations <span class="sr-only">(current)</span></a>
-            </li>
 
 
 
             {%if request.user.is_admin == 1 %}
             <li class="nav-item active">
-                <a class="nav-link" href="admin/"> Admin Panel <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/show"> Categories<span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin"> Admin Panel <span class="sr-only">(current)</span></a>
+            </li>          
             {%endif%}
-
         </ul>
 
         {%if request.user.is_authenticated%}
@@ -38,7 +37,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="{% url 'pusers:profile' %}">My-Profile</a>
                 <a class="dropdown-item" href="{% url 'myProjects' %}">My-Projects</a>
-                <a class="dropdown-item" href="#">My-Donates</a>
+                <a class="dropdown-item" href="{% url 'my_donate' %}">My-Donates</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item"  href="{% url 'password_reset'%}">Reset your Password</a>                    
                 <a class="dropdown-item"  href="{% url 'password_change'%}">Change your Password</a>   

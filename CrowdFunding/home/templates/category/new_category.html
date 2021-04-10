@@ -4,12 +4,55 @@
 
 
 {% block is_authenticated %}
+{%if request.user.is_admin == 1 %}
 
-<form method="POST" novalidate>
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit" class="btn btn-success">Add</button>
 
-</form>
 
+<div class="container">
+    <h1 class="text-center logo my-4">
+    
+    </h1>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <button type="submit" class="btn btn-success">Add</button>
+            
+            </form>
+          </div>
+          <div class="card-footer text-muted text-center">
+            Back to <a href="{% url 'index' %}">Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{%else%}
+
+
+
+<div class="container">
+    <h1 class="text-center logo my-4">
+    
+    </h1>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title row justify-content-center">You Aren't Authenticated to view this Page</h3>          
+          </div>
+          <div class="card-footer text-muted text-center">
+            Back to <a href="{% url 'index' %}">Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{%endif%}
 {% endblock %}
