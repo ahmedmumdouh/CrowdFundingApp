@@ -136,7 +136,7 @@
                             <div class="form-outline " style="width: 50%;">
                                 <input id="search_name" type="search" id="form1" name="search_name" class="form-control" placeholder="Search by Title or Tag"/>
                             </div>
-                            <button id="searchTag_submit" type="submit" class="btn btn-outline-primary ml-2"">search</button>
+                            <button id="searchTag_submit" type="submit" class="btn btn-outline-dark ml-2"">search</button>
 
                         </div>
                 </form>
@@ -175,14 +175,15 @@
     
 
 
-            <div class="row col-md-12 p-4">
+        <div class="row col-md-12 p-4">
 
                 <div class="row col-md-3 ">
-                    <div class="list-group col-md-12">
-                        <button type="button" class="list-group-item list-group-item-action active">
+                    <div class="list-group col-md-12 ">
+                        <button type="button" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: #212529;
+                        color: white;">
                             Project Categories
                         </button>
-                        <form class="rate-form" action="{% url 'index' %}" method="POST" id={{cat.id}}>
+                        <form class="rate-form border border-dark" action="{% url 'index' %}" method="POST" id={{cat.id}}>
                             {% for cat in all_category %}
                             {% csrf_token %}
                             <button type="submit" class="my_btn list-group-item list-group-item-action" value={{cat.id}} id={{cat.id}}>{{ cat.name }}</button>
@@ -212,7 +213,7 @@
 
                                 <div class="carousel-caption d-none d-md-block">
                                     <h5>{{imagerate.project.title}}</h5>
-                                    <a class="btn btn-primary" href="{% url 'viewProject' imagerate.project.id %}">show details</a>
+                                    <a class="btn btn-dark" href="{% url 'viewProject' imagerate.project.id %}">show details</a>
                             </div>
                             </div>
                         {% endfor %}
@@ -239,9 +240,9 @@
 
         <!-- end -->
 
-<!--cata-->
-<!-- <div class=" row justify-content-center col-md-12" >
-    <ul class="nav justify-content-center">
+        <!--cata-->
+        <!-- <div class=" row justify-content-center col-md-12" >
+     <ul class="nav justify-content-center">
         <li class="nav-item">
             
             <form class="rate-form" action="{% url 'index' %}" method="POST" id={{cat.id}}>
@@ -251,7 +252,7 @@
                 {%endfor%}
             </form>
         </li>
-    </ul>
+        </ul>
 
         </div>
         <br> -->
@@ -265,13 +266,13 @@
 
         <br>
 
-<!-- cata -->
+    <!-- cata -->
 
 
 
 
 
-<div class="row col-md-12 text-center justify-content-center">
+   <div class="row col-md-12 text-center justify-content-center">
     <h1 class="row col-md-6 justify-content-center">Latest Projects</h1>  <h1 class="row col-md-6 justify-content-center">Admin Selected</h1>
     <div class="row col-md-6 border-light text-center justify-content-center">
         
@@ -292,7 +293,7 @@
 
                     <div class="carousel-caption d-none d-md-block">
                         <h5>{{image.project.title}}</h5>
-                        <a class="btn btn-primary" href="{% url 'viewProject' image.project.id %}">show details</a>
+                        <a class="btn btn-dark" href="{% url 'viewProject' image.project.id %}">show details</a>
                     </div>
                 </div>
                 {% endfor %}
@@ -333,7 +334,7 @@
 
                         <div class="carousel-caption d-none d-md-block">
                             <h5>{{imgadmin.project.title}}</h5>
-                            <a class="btn btn-primary" href="{% url 'viewProject' imgadmin.project.id %}">show details</a>
+                            <a class="btn btn-dark" href="{% url 'viewProject' imgadmin.project.id %}">show details</a>
                     </div>
                     </div>
                 {% endfor %}
@@ -351,7 +352,7 @@
                 </a>
             </div>
     </div>
-</div>
+   </div>
 
         
 
@@ -364,7 +365,6 @@
 
 
     
-
 
         
         
@@ -425,7 +425,7 @@
                                 <div class="card-text text-center"><span style="color:blue ">Total Target : </span> ${project.total_target} $</div>
                             </div>
                             <div class=" text-center mb-2">
-                                    <a href= "/projects/view/${project.project_id}" class="btn btn-primary btn-block">View</a>
+                                    <a href= "/projects/view/${project.project_id}" class="btn btn-dark btn-block">View</a>
 
                             </div>
                             </div> `
