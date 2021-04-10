@@ -1,13 +1,20 @@
 {% extends 'home/base.html' %}
+{% load bootstrap4 %}
 {% load static %}
 {% block is_authenticated %}
-
-
-<form method="POST" novalidate>
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit" class="btn btn-success">Edit</button>
-
-</form>
-
+    <div class="container">
+        <h1 class="text-center logo my-4"> Edit Comment</h1>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10 col-sm-12"> 
+                <div class="card"> <div class="card-body"> 
+                    <form method="POST" novalidate> 
+                        {% csrf_token %} {% bootstrap_form form %} 
+                        <button type="submit" class="btn btn-success">Edit</button> 
+                    </form> 
+                </div> 
+                <div class="card-footer text-muted text-center"> Back to <a href="{% url 'index' %}">Home</a></div>  
+                
+            </div> 
+        </div> 
+    </div>  
 {% endblock %}
